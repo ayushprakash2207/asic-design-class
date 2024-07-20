@@ -169,7 +169,7 @@ We can also debug the assembly code generated in the object file in using the sp
 spike -d pk Lab1.c
 ```
 
-<img src="images/Lab2/step2.png" alt="Step 2" width="800"/><br>
+<img src="images/Lab2/step2_new.png" alt="Step 2" width="800"/><br>
 
 To jump to begining of the "main" section, following command can be used:
 

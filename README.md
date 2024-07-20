@@ -6,8 +6,9 @@
 3. [Execution of the output object file of RISC-V GCC compiler in Spike Simulator](#Lab2)
 
 ---
+<a name="Lab1A"></a>
 
-## Lab 1A: Create a small C program to count from 1 to n and compile it using GCC compiler. <a name="Lab1A"></a>
+## Lab 1A: Create a small C program to count from 1 to n and compile it using GCC compiler.
 
 ### Creation of a C program
 Create a new your_file.c file in the desired directory in Linux environment.<br>
@@ -59,7 +60,9 @@ In the below image we can observe the C code and the output together.
 
 ---
 
-## Lab 1B: Compile the same C program created as a part of Lab1A in RISC-V GCC compiler. <a name="Lab1B"></a>
+<a name="Lab1B"></a>
+
+## Lab 1B: Compile the same C program created as a part of Lab1A in RISC-V GCC compiler.
 
 ### Introduction to RISC-V GCC
 
@@ -129,7 +132,10 @@ Here we can observe that the number of instructions are reduced to 6 as compared
 - -O1 has shorter compilation time while -Ofast may have higher compilation time due to complex and many optimizations.
   
 ---
-## Lab 2: Execution of the object file created by the RISC-V GCC compiler using Spike Simulator. <a name="Lab2"></a>
+
+<a name="Lab2"></a>
+
+## Lab 2: Execution of the object file created by the RISC-V GCC compiler using Spike Simulator.
 
 ### Introduction to Spike Simulator
 

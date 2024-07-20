@@ -205,3 +205,18 @@ After coming to the next instruction, let's verify whether the "lui" operation c
 We can clearly observe that the value stored in $A2 register has changed after executing the "lui" operation.
 
 ---
+
+### RISC-V 'LUI' ISA
+
+'LUI' stands for Load Upper Immediate. It is a fundamental instruction used to load a 20-bit immediate value into the upper 20 bits of a 32-bit register, with the lower 12 bits set to zero. <br>
+
+The LUI instruction format is:
+
+```
+LUI rd, imm
+```
+
+- rd: Destination register where the results will be stored.
+- imm: The 20-bit immediate value to be loaded into the upper 20 bits of the destination register.
+
+---

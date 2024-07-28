@@ -608,11 +608,23 @@ So, even if we try to execute our operations using the same verilog code, we may
 
  Here, we will try to execute our list of operations in the reference verilog code by modifying the operation setting with those of our own operations.
 
+  ---
+
  #### **Icarus Verilog and Gtkwave**
 
  Icarus Verilog, commonly referred to as IVerilog, is an open-source hardware description language (HDL) simulator used for the design and verification of digital circuits.
 
  GTKWave is a waveform viewer used in the design and verification of digital circuits.
+
+ ---
+
+ #### **Output waveform without any changes in the verilog code.**
+
+ Below is the screenshot where we can observe the output waveform for different operations.
+
+ <img src="images/Lab4/unmodified_waveform.png" alt="Unmodified_Waveform" width="800"/><br>
+
+ ---
 
  #### **Modifications to operation lists in the verilog code.**
 
@@ -699,3 +711,5 @@ Operation : 32'h02101463
 Operation : 32'h0030A223
 
 <img src="images/Lab4/sw_waveform.png" alt="SW_Operation" width="800"/><br>
+
+---

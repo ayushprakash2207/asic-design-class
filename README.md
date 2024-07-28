@@ -4,6 +4,7 @@
 1. [Compilation of C code in GCC compiler](#Lab1A)
 2. [Compilation of C code in RISC-V GCC compiler](#Lab1B)
 3. [Execution of the output object file of RISC-V GCC compiler in Spike Simulator](#Lab2)
+4. [Identify the various RISC-V instruction types and their 32-bit instruction codes.](#Lab3)
 
 ---
 <a name="Lab1A"></a>
@@ -220,3 +221,332 @@ LUI rd, imm
 - imm: The 20-bit immediate value to be loaded into the upper 20 bits of the destination register.
 
 ---
+
+<a name="Lab3"></a>
+## Lab 3: Identify the various RISC-V instruction types and their 32-bit instruction codes.
+<!-- 
+### RISC-V RV32I Instructions
+
+- In the base RV32I ISA, there are four core instruction formats (R/I/S/U).
+- All core instructions are fixed 32 bits in length.
+- The instructions are aligned on a 4-byte boundary in memory.
+--- -->
+
+### Different types of RV32I instruction formats
+
+### 1. R-type Instruction
+
+<img src="images/Lab3/R_Type.png" alt="Step 5" width="800"/><br>
+Format for arithmetic and logical operations
+
+R-type instructions are used for execution of operations between 2 registers.<br>
+
+**rs1** is the source register 1 field. It is 5 bits wide.<br>
+**rs2** is the source register 2 field. it is 5 bits wide.<br>
+**rd** is the destination register field. It is 5 bits wide.<br>
+The **opcode**(OP) value for R-Type instruction is **7'b0110011**.
+
+| Instruction   | funct7 value | funct3 value |
+| :-----------: | ------------ | ------------ |
+|     ADD       | 7'b0000000   | 3'b000       |
+|     SLT       | 7'b0000000   | 3'b010       |
+|     SLTU      | 7'b0000000   | 3'b011       |
+|     AND       | 7'b0000000   | 3'b111       |
+|     OR        | 7'b0000000   | 3'b110       |
+|     XOR       | 7'b0000000   | 3'b100       |
+|     SLL       | 7'b0000000   | 3'b001       |
+|     SRL       | 7'b0000000   | 3'b101       |
+|     SRA       | 7'b0100000   | 3'b101       |
+|     SUB       | 7'b0100000   | 3'b000       | 
+
+---
+### 2. I-type Instruction
+
+<img src="images/Lab3/I_Type_Immediate.png" alt="Step 5" width="800"/><br>
+Format for immediate operations
+
+Operations use register and immediate values for execution.<br>
+This instruction format is used in Immediate and Load operations.<br>
+The opcode corresponding to the I-type instruction is named OP-IMM. It means immediate operation code.<br>
+The immediate opcode OP-IMM is **7’b001_0011**.<br>
+
+| Instruction   | funct3 value |
+| :-----------: | ------------ |
+|     ADDI      | 3'b000       |
+|     SLTI      | 3'b010       |
+|     SLTIU     | 3'b011       |
+|     ANDI      | 3'b111       |
+|     ORI       | 3'b110       |
+|     XORI      | 3'b100       |
+
+<img src="images/Lab3/I_Type_Shift.png" alt="Step 5" width="800"/><br>
+Format for shift operations
+
+| Instruction   | funct3 value |
+| :-----------: | ------------ |
+|     SLLI      | 3'b001       |
+|     SRLI      | 3'b101       |
+|     SRAI      | 3'b101       |
+
+---
+### 3. S-type Instruction
+
+<img src="images/Lab3/S_Type_store.png" alt="Step 5" width="800"/><br>
+
+In S-type instruction, 'S' stands for 'store'.<br>
+It is store type instruction that helps to store the value of a register into the memory.<br>
+In S-type instruction, there is no rd, i.e. destination register.<br>
+
+The immediate field is divided into two parts, first part is in bits 11:5, and the second part is in bits 4:0.<br>
+
+It stores a 32-bit value from register rs2 to memory, the effective address is obtained by adding register rs1 to the sign-extended 12-bit offset.
+
+---
+### 4. B-type Instruction
+
+<img src="images/Lab3/B_Type.png" alt="Step 5" width="800"/><br>
+
+In B-type instruction, 'B' stand for 'branching' which means it is mainly used for branching based on certain conditions.<br>
+
+The instruction does not include rd register and funct7, but contains rs1, rs2, funct3 and immediate.<br>
+
+There are two source registers rs1 and rs2 on which various operations are performed based on certain conditions, and those conditions are defined by func3 field.<br>
+
+The immediate is divided into two areas.<br>
+The 12-bit B-immediate encodes signed
+offsets in multiples of 2 bytes.<br>
+
+The offset is sign-extended and added to the address of the branch
+instruction to give the target address.
+
+The conditional branch range is ±4 KiB.<br>
+
+---
+### 32-bit format for various different instructions
+
+```
+ADD r7, r8, r9
+```
+> - R Type instruction since it's a register-register operation.
+> - Adds the registers r8 and r9, stores the result in r7.
+> - funct7 value for ADD operation is **7'b0000000**<br>
+> rs1 = r8 = **5b'01000**<br>
+> rs2 = r9 = **5b'01001**<br>
+> funct3 value for ADD operation is **3b'000**<br>
+> rd = r7 = **5b'00111**<br>
+> Opcode for ADD is **7'b0110011** since it's an R-type instruction.<br>
+
+#### 32 bits instruction : ```0000000_01001_01000_000_00111_0110011```
+---
+<br>
+
+```
+SUB r9, r7, r8
+```
+> - R Type instruction since it's a register-register operation.
+> - Subtracts the registers r7 and r8, stores the result in r9.
+> - funct7 value for SUB operation is **7'b0100000**<br>
+> rs1 = r7 = **5b'00111**<br>
+> rs2 = r8 = **5b'01000**<br>
+> funct3 value for SUB operation is **3b'000**<br>
+> rd = r9 = **5b'01001**<br>
+> Opcode for SUB is **7'b0110011** since it's an R-type instruction.<br>
+
+#### 32 bits instruction : ```0100000_01000_00111_000_01001_0110011```
+---
+<br>
+
+```
+AND r8, r7, r9
+```
+> - R Type instruction since it's a register-register operation.
+> - Performs bitwise AND operation between the registers r7 and r9, stores the result in r8.
+> - funct7 value for AND operation is **7'b0000000**<br>
+> rs1 = r7 = **5b'00111**<br>
+> rs2 = r9 = **5b'01001**<br>
+> funct3 value for AND operation is **3b'111**<br>
+> rd = r8 = **5b'01000**<br>
+> Opcode for AND is **7'b0110011** since it's an R-type instruction.<br>
+
+#### 32 bits instruction : ```0000000_01001_00111_111_01000_0110011```
+---
+<br>
+
+```
+OR r8, r8, r5
+```
+> - R Type instruction since it's a register-register operation.
+> - Performs bitwise OR operation between the registers r8 and r5, stores the result in r8.
+> - funct7 value for AND operation is **7'b0000000**<br>
+> rs1 = r8 = **5b'01000**<br>
+> rs2 = r5 = **5b'00101**<br>
+> funct3 value for AND operation is **3b'110**<br>
+> rd = r8 = **5b'01000**<br>
+> Opcode for OR is **7'b0110011** since it's an R-type instruction.<br>
+
+#### 32 bits instruction : ```0000000_00101_01000_110_01000_0110011```
+---
+
+<br>
+
+```
+XOR r8, r7, r4
+```
+> - R Type instruction since it's a register-register operation.
+> - Performs bitwise XOR operation between the registers r7 and r4, stores the result in r8.
+> - funct7 value for AND operation is **7'b0000000**<br>
+> rs1 = r7 = **5b'00111**<br>
+> rs2 = r4 = **5b'00100**<br>
+> funct3 value for AND operation is **3b'100**<br>
+> rd = r8 = **5b'01000**<br>
+> Opcode for XOR is **7'b0110011** since it's an R-type instruction.<br>
+
+#### 32 bits instruction : ```0000000_00100_00111_100_01000_0110011```
+---
+
+<br>
+
+```
+SLT r10, r2, r4
+```
+> - R Type instruction since it's a register-register operation.
+> - Place '1' in r10 register if r4 is less than r2, else place 0 in r10. Values in both r2 and r4 are treated as signed numbers.
+> - funct7 value for AND operation is **7'b0000000**<br>
+> rs1 = r2 = **5b'00010**<br>
+> rs2 = r4 = **5b'00100**<br>
+> funct3 value for SLT operation is **3b'010**<br>
+> rd = r10 = **5b'01010**<br>
+> Opcode for SLT is **7'b0110011** since it's an R-type instruction.<br>
+
+#### 32 bits instruction : ```0000000_00100_00010_010_01010_0110011```
+---
+
+<br>
+
+```
+ADDI r12, r3, 5
+```
+> - I Type instruction since it's a register-immediate value operation.
+> - Add r3 with immediate value(5), store in r12 register.
+> - Immediate value = 5 = 12b'000000000101
+> rs1 = r3 = **5b'00011**<br>
+> funct3 value for ADDI operation is **3b'000**<br>
+> rd = r12 = **5b'01100**<br>
+> Opcode for ADDI is **7’b001_0011** since it's an I-type instruction.<br>
+
+#### 32 bits instruction : ```000000000101_00011_000_01100_0010011```
+---
+
+<br>
+
+```
+SW r3, r1, 4
+```
+> - S Type instruction since it's a store operation
+> - The source register is r3. Address will be obtained by adding immediate address value 4 with the address located in register r1.
+> - Immediate value[11:0] = 4 = 12b'000000000100
+> rs2 = r3 = **5b'00011**<br>
+> rs1 = r1 = **5b'00001**<br>
+> funct3 value for ADDI operation is **3b'010**<br>
+> rd = r12 = **5b'01100**<br>
+> Opcode for SW is **7’b010_0011** since it's an S-type instruction.<br>
+
+#### 32 bits instruction : ```0000000_00011_00001_010_00100_0100011```
+---
+
+<br>
+
+```
+SRL r16, r11, r2
+```
+> - R Type instruction since it's a register-register operation.
+> - Value in r11 register will be logical right shifted by the value stored in r2, result will be stored in r16 
+> - funct7 value for ADD operation is **7'b0000000**<br>
+> rs2 = r2 = **5b'00010**<br>
+> rs1 = r11 = **5b'01011**<br>
+> funct3 value for SRL operation is **3b'101**<br>
+> rd = r16 = **5b'10000**<br>
+> Opcode for SRL is **7'b0110011** since it's an R-type instruction.<br>
+
+#### 32 bits instruction : ```0000000_00010_01011_101_10000_0110011```
+---
+
+<br>
+
+```
+BNE r0,r1,20
+```
+> - Since it's a branch operation, so B-type instruction.
+> - If the register r0 and r1 are not equal, then take the branch.
+> - if(r0 != r1) PC = PC + immediate = PC + 20
+> - else PC = PC + 4
+> - immediate = 20 = 000000010100
+> rs1 = r0 = **5b'00000**<br>
+> rs2 = r1 = **5b'00001**<br>
+> imm[12] = 0 <br>
+> imm[10:5] = 000001 <br>
+> imm[11] = 0 <br>
+> imm[4:1] 0100
+> funct3 value for BNE operation is **3b'001**<br>
+> Opcode for BNE is **7'b1100011** since it's an B-type instruction.<br>
+
+#### 32 bits instruction : ```0_000001_00001_00000_001_0100_0_1100011```
+---
+
+<br>
+
+```
+BEQ r0,r0,15
+```
+> - Since it's a branch operation, so B-type instruction.
+> - If the register r0 and r0 are equal, then take the branch.
+> - if(r0 == r0) PC = PC + immediate = PC + 15
+> - else PC = PC + 4
+> - immediate = 15 = 000000001111
+> rs1 = r0 = **5b'00000**<br>
+> rs2 = r0 = **5b'00000**<br>
+> imm[12] = 0 <br>
+> imm[10:5] = 000000 <br>
+> imm[11] = 0 <br>
+> imm[4:1] 1111
+> funct3 value for BEQ operation is **3b'000**<br>
+> Opcode for BEQ is **7'b1100011** since it's an B-type instruction.<br>
+
+#### 32 bits instruction : ```0_000000_00000_00000_000_1111_0_1100011```
+---
+
+<br>
+
+```
+LW r13, r11, 2
+```
+> - I-type instruction, since it's a load word operation 
+> - Load the data from address stored in r11 plus offset added and store it in r13.
+> - immediate = 2 = 000000000010
+> rs1 = r11 = **5b'01011**<br>
+> rd = r13 = **5b'01101**<br>
+> funct3 value for LW operation is **3b'010**<br>
+> Opcode for BEQ is **7'b0000011** since it's an I-type instruction.<br>
+
+#### 32 bits instruction : ```000000000010_01011_010_01101_0000011```
+---
+
+<br>
+
+```
+SLL r15, r11, r2
+```
+> - R Type instruction since it's a register-register operation.
+> - Value in r11 register will be logical right shifted by the value stored in r2, result will be stored in r15
+> - funct7 value for ADD operation is **7'b0000000**<br>
+> rs2 = r2 = **5b'00010**<br>
+> rs1 = r11 = **5b'01011**<br>
+> funct3 value for ADD operation is **3b'001**<br>
+> rd = r7 = **5b'01111**<br>
+> Opcode for ADD is **7'b0110011** since it's an R-type instruction.<br>
+
+#### 32 bits instruction : ```0000000_00010_01011_001_01111_0110011```
+---
+
+<a name="Lab4"></a>
+## Lab 4: Identify the various RISC-V instruction types and their 32-bit instruction codes.

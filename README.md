@@ -4,7 +4,8 @@
 1. [Compilation of C code in GCC compiler](#Lab1A)
 2. [Compilation of C code in RISC-V GCC compiler](#Lab1B)
 3. [Execution of the output object file of RISC-V GCC compiler in Spike Simulator](#Lab2)
-4. [Identify the various RISC-V instruction types and their 32-bit instruction codes.](#Lab3)
+4. [Identify the various RISC-V instruction types and their 32-bit instruction codes](#Lab3)
+5. [Execute the RISC-V ISA in the reference verilog code and get the output waveform](#Lab4)
 
 ---
 <a name="Lab1A"></a>
@@ -548,7 +549,7 @@ SLL r15, r11, r2
 ---
 
 <a name="Lab4"></a>
-## Lab 4: Identify the various RISC-V instruction types and their 32-bit instruction codes.
+## Lab 4: Execute the RISC-V ISA in the reference verilog code and get the output waveform
 
 Below table shows the different instructions present in the reference verilog code:
 
@@ -582,6 +583,7 @@ Below table shows different instructions listed in the previous task and their b
 |ADDI R12, R3, 5 |32'h00520600  | 0000000000101 00011 000 01100 0010011   |
 |LW R13, R11, 2	 |32'h0025A683  | 0000000000010 01011 010 01101 0000011   |
 |BEQ R0, R0, 15	 |32'h00000f63  | 0 000000 00000 00000 000 1111 0 1100011 |
+|BNE R0, R1, 20	 |32'h02101463  | 0 000001 00001 00000 001 0100 0 1100011 |
 |SW R3, R1, 2	 |32'h0030A223  | 0000000 00011 00001 010 00100 0100011   |
 
 
@@ -620,4 +622,80 @@ So, even if we try to execute our operations using the same verilog code, we may
 
  Left side is the non-modified verilog code, while in the right side, we have set our own operations.
 
- 
+#### 1. ADD r7, r8, r9
+
+Operation : 32'h009403B3
+
+<img src="images/Lab4/add_waveform.png" alt="ADD_Operation" width="800"/><br>
+
+#### 2. SUB r9, r7, r8
+
+Operation : 32'h408384B3
+
+<img src="images/Lab4/sub_waveform.png" alt="SUB_Operation" width="800"/><br>
+
+#### 3. AND r8, r7, r9
+
+Operation : 32'h0093F433
+
+<img src="images/Lab4/add_waveform.png" alt="AND_Operation" width="800"/><br>
+
+#### 4. OR r8, r8, r5
+
+Operation : 32'h00546433
+
+<img src="images/Lab4/sub_waveform.png" alt="OR_Operation" width="800"/><br>
+
+#### 5. XOR R8, R7, R4
+
+Operation : 32'h0043C433
+
+<img src="images/Lab4/xor_waveform.png" alt="XOR_Operation" width="800"/><br>
+
+#### 6. SLT R10, R2, R4
+
+Operation : 32'h00412533
+
+<img src="images/Lab4/slt_waveform.png" alt="SLT_Operation" width="800"/><br>
+
+#### 7. SRL R16, R11, R2
+
+Operation : 32'h0025D833
+
+<img src="images/Lab4/srl_waveform.png" alt="SRL_Operation" width="800"/><br>
+
+#### 8. SLL R15, R11, R2
+
+Operation : 32'h002597B3
+
+<img src="images/Lab4/sll_waveform.png" alt="SLL_Operation" width="800"/><br>
+
+#### 9. ADDI R12, R3, 5
+
+Operation : 32'h00520600
+
+<img src="images/Lab4/addi_waveform.png" alt="ADDI_Operation" width="800"/><br>
+
+#### 10. LW R13, R11, 2
+
+Operation : 32'h0025A683
+
+<img src="images/Lab4/lw_waveform.png" alt="LW_Operation" width="800"/><br>
+
+#### 11. BEQ R0, R0, 15
+
+Operation : 32'h00000f63
+
+<img src="images/Lab4/beq_waveform.png" alt="BEQ_Operation" width="800"/><br>
+
+#### 12. BNE R0, R1, 20
+
+Operation : 32'h02101463
+
+<img src="images/Lab4/bne_waveform.png" alt="BNE_Operation" width="800"/><br>
+
+#### 13. SW R3, R1, 2
+
+Operation : 32'h0030A223
+
+<img src="images/Lab4/sw_waveform.png" alt="SW_Operation" width="800"/><br>

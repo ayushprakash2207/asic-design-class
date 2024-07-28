@@ -444,11 +444,10 @@ SW r3, r1, 4
 ```
 > - S Type instruction since it's a store operation
 > - The source register is r3. Address will be obtained by adding immediate address value 4 with the address located in register r1.
-> - Immediate value[11:0] = 4 = 12b'000000000100
+> - Immediate value[11:0] = 4 = 12b'000000000100<br>
 > rs2 = r3 = **5b'00011**<br>
 > rs1 = r1 = **5b'00001**<br>
-> funct3 value for ADDI operation is **3b'010**<br>
-> rd = r12 = **5b'01100**<br>
+> funct3 value for SW operation is **3b'010**<br>
 > Opcode for SW is **7’b010_0011** since it's an S-type instruction.<br>
 
 #### 32 bits instruction : ```0000000_00011_00001_010_00100_0100011```
@@ -550,3 +549,44 @@ SLL r15, r11, r2
 
 <a name="Lab4"></a>
 ## Lab 4: Identify the various RISC-V instruction types and their 32-bit instruction codes.
+
+Below table shows the different instructions present in the reference verilog code:
+
+|Operation	     | ISA          |             Bit Pattern                 |
+|----------------|--------------|-----------------------------------------|
+|ADD R6, R2, R1	 |32'h02208300  | 0000001 00010 00001 000 00110 0000000   |
+|SUB R7, R1, R2	 |32'h02209380  | 0000001 00010 00001 001 00111 0000000   |
+|AND R8, R1, R3	 |32'h0230a400  | 0000001 00011 00001 010 01000 0000000   |
+|OR R9, R2, R5	 |32'h02513480  | 0000001 00101 00010 011 01001 0000000   |
+|XOR R10, R1, R4 |32'h0240c500  | 0000001 00100 00001 100 01010 0000000   |
+|SLT R1, R2, R4	 |32'h02415580  | 0000001 00100 00010 101 01011 0000000   |
+|SRL R16, R14, R2|32'h00271803  | 0000000 00010 01110 001 10000 0000011   |
+|SLL R15, R1, R2 |32'h00208783  | 0000000 00010 00001 000 01111 0000011   |
+|ADDI R12, R4, 5 |32'h00520600  | 0000000000101 00100 000 01100 0000000   |
+|LW R13, R1, 2	 |32'h00208681  | 0000000 00010 00001 000 01101 0000001   |
+|BEQ R0, R0, 15	 |32'h00f00002  | 0 000000 01111 00000 000 0000 0 0000010 | ""
+|SW R3, R1, 2	 |32'h00209181  | 0000000 00010 00001 001 00011 0000001   | ""
+
+Below table shows different instructions listed in the previous task and their bit patters:
+
+|Operation	     | ISA          |             Bit Pattern                 |
+|----------------|--------------|-----------------------------------------|
+|ADD R7, R8, R9	 |32'h009403B3  | 0000000 01001 01000 000 00111 0110011   |
+|SUB R9, R7, R8	 |32'h408384B3  | 0100000 01000 00111 000 01001 0110011   |
+|AND R8, R7, R9	 |32'h0093F433  | 0000000 01001 00111 111 01000 0110011   |
+|OR R8, R8, R5	 |32'h00546433  | 0000000 00101 01000 110 01000 0110011   |
+|XOR R8, R7, R4  |32'h0043C433  | 0000000 00100 00111 100 01000 0110011   |
+|SLT R10, R2, R4 |32'h00412533  | 0000000 00100 00010 010 01010 0110011   |
+|SRL R16, R11, R2|32'h0025D833  | 0000000 00010 01011 101 10000 0110011   |
+|SLL R15, R11, R2 |32'h002597B3 | 0000000 00010 01011 001 01111 0110011   |
+
+|ADDI R12, R3, 5 |32'h00520600  | 0000000000101 00011 000 01100 0010011   |
+|LW R13, R11, 2	 |32'h0025A683  | 0000000000010 01011 010 01101 0000011   |
+
+|BEQ R0, R0, 15	 |32'h00000f63  | 0 000000 00000 00000 000 1111 0 1100011 |
+|SW R3, R1, 2	 |32'h0030A223  | 0000000 00011 00001 010 00100 0100011   |
+
+
+If we compare the above tables, we can observe that there are many differences between the bit pattern of different instruction formats.
+
+R-Type Instructions: ADD, SUB, AND, OR, XOR, SLT, SRL, SLL

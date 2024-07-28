@@ -578,7 +578,7 @@ Below table shows different instructions listed in the previous task and their b
 |XOR R8, R7, R4  |32'h0043C433  | 0000000 00100 00111 100 01000 0110011   |
 |SLT R10, R2, R4 |32'h00412533  | 0000000 00100 00010 010 01010 0110011   |
 |SRL R16, R11, R2|32'h0025D833  | 0000000 00010 01011 101 10000 0110011   |
-|SLL R15, R11, R2 |32'h002597B3 | 0000000 00010 01011 001 01111 0110011   |
+|SLL R15, R11, R2|32'h002597B3  | 0000000 00010 01011 001 01111 0110011   |
 |ADDI R12, R3, 5 |32'h00520600  | 0000000000101 00011 000 01100 0010011   |
 |LW R13, R11, 2	 |32'h0025A683  | 0000000000010 01011 010 01101 0000011   |
 |BEQ R0, R0, 15	 |32'h00000f63  | 0 000000 00000 00000 000 1111 0 1100011 |
@@ -587,4 +587,37 @@ Below table shows different instructions listed in the previous task and their b
 
 If we compare the above tables, we can observe that there are many differences between the bit pattern of different instruction formats.
 
-R-Type Instructions: ADD, SUB, AND, OR, XOR, SLT, SRL, SLL
+For R-type format, we can observe differences in the opcode, funct7 and funct3 values.
+
+For example, consider ADD operation:
+
+Hardcoded: ADD R6, R2, R1: 0000001 00010 00001 000 00110 0000000
+Standard RISC-V: ADD R7, R8, R9: 0000000 01001 01000 000 00111 0110011
+
+We can observe that the bit pattern is different for **opcode**, **funct3** and **funct7**.
+
+For other instructions, we can see similar differences in the standard RISC-V ISA bit pattern and the hardcoded ISA in the verilog code.
+
+So, even if we try to execute our operations using the same verilog code, we may not get appropriate output as we would also need to modify the opcode, funct3 and funct7 values in the verilog code.
+
+ ---
+
+ ### Verilog output of the various RISC-V operations using the reference Verilog code
+
+ Here, we will try to execute our list of operations in the reference verilog code by modifying the operation setting with those of our own operations.
+
+ #### **Icarus Verilog and Gtkwave**
+
+ Icarus Verilog, commonly referred to as IVerilog, is an open-source hardware description language (HDL) simulator used for the design and verification of digital circuits.
+
+ GTKWave is a waveform viewer used in the design and verification of digital circuits.
+
+ #### **Modifications to operation lists in the verilog code.**
+
+ Below, we can observe the modification in the operations in the verilog code.
+
+ <img src="images/Lab4/verilog_operations_modification.png" alt="Differences" width="800"/><br>
+
+ Left side is the non-modified verilog code, while in the right side, we have set our own operations.
+
+ 

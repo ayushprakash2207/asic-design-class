@@ -813,7 +813,7 @@ Below snippet shows the assembly instruction for the **main** function
 
 Makerchip supports the emerging <a ref="www.https://www.tl-x.org/">Transaction-Level Verilog standard</a>. Transaction-Level Verilog, or TL-Verilog, represents a huge step forward, by eliminating the need for the legacy language features of Verilog and by introducing simpler syntax. At the same time, TL-Verilog adds powerful constructs for pipelines and transactions.
 
-### [Combinational Logic](tl_verilog_code\Calculator.tlv)
+### [Combinational Logic](tl_verilog_code/Calculator.tlv)
 
 Here, we have implemented a basic combinational calculator. Below code snippet is the TL-Verilog code to implement the calculator on the Makerchip platform.
 

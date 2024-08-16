@@ -811,7 +811,7 @@ Below snippet shows the assembly instruction for the **main** function
 
 [Makerchip](https://www.makerchip.com) is a free online platform to develop digital electronic circuits. We can develop circuits using TL Verilog directly in the browser. All steps of compilation, coding, debugging, visualization can be done in the same browser window.
 
-Makerchip supports the emerging [Transaction-Level Verilog standard](www.https://www.tl-x.org/). Transaction-Level Verilog, or TL-Verilog, represents a huge step forward, by eliminating the need for the legacy language features of Verilog and by introducing simpler syntax. At the same time, TL-Verilog adds powerful constructs for pipelines and transactions.
+Makerchip supports the emerging Transaction-Level Verilog standard. Transaction-Level Verilog, or [TL-Verilog](https://www.tl-x.org/), represents a huge step forward, by eliminating the need for the legacy language features of Verilog and by introducing simpler syntax. At the same time, TL-Verilog adds powerful constructs for pipelines and transactions.
 
 ### [Combinational Logic](tl_verilog_code/Calculator.tlv)
 

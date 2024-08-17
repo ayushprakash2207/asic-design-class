@@ -835,4 +835,55 @@ Below is a screenshot of the implementation of the above code for a basic combin
 
 <img src="images/Lab6/comb_ckt.png" alt="Makerchip_Comb_Ckt" width="800"/><br>
 
+### [Sequential Logic](tl_verilog_code/Counter.tlv)
 
+Here, we are introduced to a new operation ```>>?```. It is ahead of operator which will provide the value of that signal some clock cycles prior.
+
+Below is the snippet for a free runnning up counter implemented in TL-Verilog on the maker chip platform.
+
+We have a reset signal which will reset the output to 0 when it is pulled high.
+
+```
+$num[15:0] = *reset ? 0             // 0 if reset
+                    : >>1$num + 1;  // otherwise add previous and 1
+```
+
+Below screenshot shows the implementation of the above counter logic on makerchip platform. We can also observe and verify the working of the logic using the generated waveform.
+
+<img src="images/Lab6/seq_ckt.png" alt="Makerchip_Seq_Ckt" width="800"/><br>
+
+### [Pipelined Logic](tl_verilog_code/Pipeline_Calc.tlv)
+
+Below code snippet shows a Calculator logic implemented using TL-Verilog. It follows a pipelined design so that the circuit can be operated at higher clock frequencies.
+
+The multiplexer to select the operation is shifted to the next clock cycle so that the calculator logic can operate at higher frequencies.
+
+```
+|calc
+      @1
+         $reset = *reset;
+   
+         $val1[31:0] = >>2$out[31:0];
+         $val2[31:0] = $rand2[3:0];
+         $sel[1:0] = $rand3[1:0];
+   
+         $sum[31:0] = $val1[31:0] + $val2[31:0];
+         $diff[31:0] = $val1[31:0] - $val2[31:0];
+         $prod[31:0] = $val1[31:0] * $val2[31:0];
+         $quot[31:0] = $val1[31:0] / $val2[31:0];
+            
+         $count = $reset ? 0 : >>1$count + 1;
+         
+      @2
+         $valid = !$count;
+         $calc_reset = $reset | $valid;
+         $out[31:0] = $calc_reset ? 32'b0
+                                  : ($sel[1] ? ($sel[0] ? $quot[31:0] 
+                                                        : $prod[31:0])
+                                             : ($sel[0] ? $diff[31:0] 
+                                                        : $sum[31:0]));
+```
+
+Below screenshot shows the implementation of above logic in MakerChip platform.
+
+<img src="images/Lab6/pipeline_logic.png" alt="Makerchip_Pipeline_Ckt" width="800"/><br>

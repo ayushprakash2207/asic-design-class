@@ -961,7 +961,9 @@ Below screenshot depicts the implementation of the above logic in MakerChip plat
 
 Below is the code snippet for the calculator with memory,
 
-```
+<details>
+<summary>2-Cycle Calculator with Memory</summary>
+<pre>
 |calc
       @0
          $reset = *reset;
@@ -992,8 +994,9 @@ Below is the code snippet for the calculator with memory,
                                      : ($sel == 3'd3) ? $quot[31:0]
                                      : ($sel == 3'd4) ? $recall[31:0]
                                      : '0;
-```
-
+</pre>
+</details>
+<br>
 In the below screenshot, we can see the implementation of our code on the MakerChip platform,
 
 <img src="images/Lab6/memory_calculator.png" alt="Makerchip_Validity_Memory_Calc" width="800"/><br>
@@ -1041,7 +1044,9 @@ The information what we try to decode is which instruction set it belongs to, wh
 
 Below code snippet shows the logic used for the decode stage,
 
-```
+<details>
+<summary>Decode Logic</summary>
+<pre>
 $instr[31:0] = $imem_rd_data[31:0];
          
          $is_i_instr = $instr[6:2] ==? 5'b0000x ||
@@ -1100,8 +1105,52 @@ $instr[31:0] = $imem_rd_data[31:0];
          $is_bgeu = $dec_bits ==? 11'bx1111100011;
          $is_addi = $dec_bits ==? 11'bx0000010011;
          $is_add  = $dec_bits ==  11'b00000110011;
-```
+</pre>
+</details>
 
+<br>
 Below code shows the implementation of decode stage in the MakerChip platform,
 
-<img src="images/Lab7/decode.png" alt="Makerchip_Fetch" width="800"/><br>
+<img src="images/Lab7/decode.png" alt="Makerchip_Decode" width="800"/><br>
+
+### [Register Read and Write](tl_verilog_code/reg_file_read_write.tlv)
+
+Below snippet shows the logic for Register read and write functionality.
+
+<details>
+<summary>Register File Read and Write Logic</summary>
+<pre>
+// Register File Read Logic
+         
+         ?$rs1_valid
+            $rf_rd_en1 = $rs1_valid;
+            $rf_rd_index1[4:0] = $rs1[4:0];
+         
+         ?$rs2_valid
+            $rf_rd_en2 = $rs2_valid;
+            $rf_rd_index2[4:0] = $rs2[4:0];
+         
+         $src1_value[31:0] = $rf_rd_data1[31:0];
+         $src2_value[31:0] = $rf_rd_data2[31:0];
+         
+         //ALU
+         
+         $result[31:0] = $is_addi ? $src1_value + $imm :
+                         $is_add  ? $src1_value + $src2_value :
+                         32'bx;
+         
+         // Register File Write
+         $rf_wr_en = ($rd == 5'b0) ? 1'b0 : $rd_valid;
+         
+         ?$rd_valid
+            $rf_wr_index[4:0] = $rd[4:0];
+         
+         $rf_wr_data[31:0] = $result[31:0];
+</pre>
+</details>
+<br>
+Here, an ALU has also been designed with initially two operations, i.e, ADD and ADDI.
+
+Below snippet shows the implementation of the above logic in the MakerChip platform,
+
+<img src="images/Lab7/RF_Read_Write.png" alt="Makerchip_RF_Read_Write" width="800"/><br>

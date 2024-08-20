@@ -13,7 +13,10 @@
 ---
 <a name="Lab1A"></a>
 
-## Lab 1A: Create a small C program to count from 1 to n and compile it using GCC compiler.
+<details>
+<summary>
+Lab 1A: Create a small C program to count from 1 to n and compile it using GCC compiler.
+</summary>
 
 ### Creation of a C program
 Create a new your_file.c file in the desired directory in Linux environment.<br>
@@ -62,12 +65,16 @@ After compilation, the executable will be generated. Run the executable in termi
 In the below image we can observe the C code and the output together.
 
 <img src="images/Lab1A/final_output.png" alt="Step 3" width="800"/><br><br>
+</details>
 
 ---
 
 <a name="Lab1B"></a>
 
-## Lab 1B: Compile the same C program created as a part of Lab1A in RISC-V GCC compiler.
+<details>
+<summary>
+Lab 1B: Compile the same C program created as a part of Lab1A in RISC-V GCC compiler.
+</summary>
 
 ### Introduction to RISC-V GCC
 
@@ -136,11 +143,16 @@ Here we can observe that the number of instructions are reduced to 6 as compared
 - -O1 maintains strict adherence to standards while -Ofast may violate some standards to achieve better performance.
 - -O1 has shorter compilation time while -Ofast may have higher compilation time due to complex and many optimizations.
   
+</details>
+
 ---
 
 <a name="Lab2"></a>
 
-## Lab 2: Execution of the object file created by the RISC-V GCC compiler using Spike Simulator.
+<details>
+<summary>
+Lab 2: Execution of the object file created by the RISC-V GCC compiler using Spike Simulator.
+</summary>
 
 ### Introduction to Spike Simulator
 
@@ -224,10 +236,17 @@ LUI rd, imm
 - rd: Destination register where the results will be stored.
 - imm: The 20-bit immediate value to be loaded into the upper 20 bits of the destination register.
 
+</details>
+
 ---
 
+
+<details>
+<summary>
 <a name="Lab3"></a>
-## Lab 3: Identify the various RISC-V instruction types and their 32-bit instruction codes.
+Lab 3: Identify the various RISC-V instruction types and their 32-bit instruction codes.
+</summary>
+
 <!-- 
 ### RISC-V RV32I Instructions
 
@@ -549,10 +568,17 @@ SLL r15, r11, r2
 > Opcode for ADD is **7'b0110011** since it's an R-type instruction.<br>
 
 #### 32 bits instruction : ```0000000_00010_01011_001_01111_0110011```
+
+</details>
+
 ---
 
 <a name="Lab4"></a>
-## Lab 4: Execute the RISC-V ISA in the reference verilog code and get the output waveform
+
+<details>
+<summary>
+Lab 4: Execute the RISC-V ISA in the reference verilog code and get the output waveform
+</summary>
 
 Below table shows the different instructions present in the reference verilog code:
 
@@ -715,9 +741,12 @@ Operation : 32'h0030A223
 
 <img src="images/Lab4/sw_waveform.png" alt="SW_Operation" width="800"/><br>
 
+</details>
+
 ---
 
 <a name="Lab5"></a>
+
 ## Lab 5: Create a C program for Caesar's data encryption and decryption algorithm. Execute the same in GCC and RISC-V GCC compiler.
 
 ### Caesar's encryption algorithm

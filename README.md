@@ -8,6 +8,7 @@
 5. [Execute the RISC-V ISA in the reference verilog code and get the output waveform](#Lab4)
 6. [Create a C program for Caesar's data encryption and decryption algorithm. Execute the same in GCC and RISC-V GCC compiler.](#Lab5)
 7. [Makerchip Platform and Digital Logic with TL-Verilog.](#Lab6)
+8. [A basic micro-architecture for RISC-V CPU](#Lab7)
 
 ---
 <a name="Lab1A"></a>
@@ -887,3 +888,191 @@ The multiplexer to select the operation is shifted to the next clock cycle so th
 Below screenshot shows the implementation of above logic in MakerChip platform.
 
 <img src="images/Lab6/pipeline_logic.png" alt="Makerchip_Pipeline_Ckt" width="800"/><br>
+
+### [Validity](tl_verilog_code/Validity_Calculator.tlv)
+
+Validity in TL-verilog means signal indicates validity of transaction and described as "when" scope else it will work as don't care. Denoted as ```?$valid```. Validity provides easier debug, cleaner design, better error checking, automated clock gating.
+
+Below code snippet is a logic for 2-cycle calculator with validity,
+
+```
+|calc
+      @0
+         $reset = *reset;
+      @1
+         $valid = $reset ? 0 : >>1$valid + 1;
+         $valid_or_reset = $valid || $reset; 
+   
+      ?$valid_or_reset
+         @1   
+            $val1[31:0] = >>2$out[31:0];
+            $val2[31:0] = $rand2[3:0];
+            $sel[1:0] = $rand3[1:0];
+            
+            $sum[31:0] = $val1[31:0] + $val2[31:0];
+            $diff[31:0] = $val1[31:0] - $val2[31:0];
+            $prod[31:0] = $val1[31:0] * $val2[31:0];
+            $quot[31:0] = $val1[31:0] / $val2[31:0];
+            
+            $count = $reset ? 0 : >>1$count + 1;
+         
+         @2
+            $out[31:0] = $reset ? 32'b0
+                                : ($sel[1] ? ($sel[0] ? $quot[31:0] 
+                                                      : $prod[31:0])
+                                           : ($sel[0] ? $diff[31:0] 
+                                                      : $sum[31:0]));
+```
+
+Below screenshot depicts the implementation of the above logic in MakerChip platform.
+
+<img src="images/Lab6/validity_calculator.png" alt="Makerchip_Validity_Calc" width="800"/><br>
+
+### [2-Cycle Validity Calculator with Memory](tl_verilog_code/Memory_Calculator.tlv)
+
+Below is the code snippet for the calculator with memory,
+
+```
+|calc
+      @0
+         $reset = *reset;
+      @1
+         $valid = $reset ? 0 : >>1$valid+1;
+         $valid_or_reset = $valid || $reset; 
+   
+      ?$valid_or_reset
+         @1   
+            $val1[31:0] = >>2$out[31:0];
+            $val2[31:0] = $rand2[3:0];
+            $sel[2:0] = $rand3[2:0];
+            
+            $sum[31:0] = $val1[31:0] + $val2[31:0];
+            $diff[31:0] = $val1[31:0] - $val2[31:0];  
+            $prod[31:0] = $val1[31:0] * $val2[31:0];
+            $quot[31:0] = $val1[31:0] / $val2[31:0];
+            
+         
+         @2
+            $mem[31:0] = $reset ? '0 : ($sel == 3'd5) ? >>2$out[31:0]
+                                                      : >>2$mem[31:0];
+            $recall[31:0] = >>2$mem[31:0];
+            
+            $out[31:0] = $reset ? '0 : ($sel == 3'd0) ? $sum[31:0]
+                                     : ($sel == 3'd1) ? $diff[31:0]
+                                     : ($sel == 3'd2) ? $prod[31:0]
+                                     : ($sel == 3'd3) ? $quot[31:0]
+                                     : ($sel == 3'd4) ? $recall[31:0]
+                                     : '0;
+```
+
+In the below screenshot, we can see the implementation of our code on the MakerChip platform,
+
+<img src="images/Lab6/memory_calculator.png" alt="Makerchip_Validity_Memory_Calc" width="800"/><br>
+
+---
+
+<a name="Lab7"></a>
+## Lab 6: A basic micro-architecture for RISC-V CPU
+
+### [Fetch](tl_verilog_code/fetch.tlv)
+
+In the fetch stage, the CPU will fetch the next instruction to be executed from the instruction memory. 
+
+The address from where the instruction will be fetched is provided by the program counter(PC).
+
+Below code represents the logic to implement a program counter(PC) and how to fetch an instruction from the instruction memory.
+
+```
+|cpu
+      @0
+         $reset = *reset;
+         
+         $pc[31:0] = $reset ? '0 : >>1$pc + 32'd4;
+         
+         $imem_rd_en = !$reset ? 1 : 0;
+         $imem_rd_addr[31:0] = $pc[M4_IMEM_INDEX_CNT+1:2];
+
+      @1
+         $instr[31:0] = $imem_rd_data[31:0];
+```
+
+Here, if the reset signal is high, then the program counter will be reset to value 0, otherwise when the program counter will increment by 4 since the address of each instruction is 32 bits wide.
+
+The PC value will be fed as an input to the instruction memory to fetch the instruction from that particular address location.
+
+Below is the screenshot where we can observe the implementation of the **Fetch** logic in MakerChip platform.
+
+<img src="images/Lab7/fetch.png" alt="Makerchip_Fetch" width="800"/><br>
+
+### [Decode](tl_verilog_code/decode.tlv)
+
+In decode stage, we try to get the various infomation about an instruction from the fetch stage instruction read output.
+
+The information what we try to decode is which instruction set it belongs to, what is the immediate value if it is present, the register values etc.
+
+Below code snippet shows the logic used for the decode stage,
+
+```
+$instr[31:0] = $imem_rd_data[31:0];
+         
+         $is_i_instr = $instr[6:2] ==? 5'b0000x ||
+                       $instr[6:2] ==? 5'b001x0 ||
+                       $instr[6:2] ==  5'b11001;
+         
+         $is_r_instr = $instr[6:2] ==  5'b01011 ||
+                       $instr[6:2] ==? 5'b011x0 ||
+                       $instr[6:2] ==  5'b10100;
+         
+         $is_s_instr = $instr[6:2] ==? 5'b0100x;
+         
+         $is_b_instr = $instr[6:2] ==  5'b11000;
+         
+         $is_j_instr = $instr[6:2] ==  5'b11011;
+         
+         $is_u_instr = $instr[6:2] ==?  5'b0x101;
+         
+         $imm[31:0] = $is_i_instr ? {{21{$instr[31]}}, $instr[30:20]} :
+                      $is_s_instr ? {{21{$instr[31]}}, $instr[30:25], $instr[11:7]} :
+                      $is_b_instr ? {{20{$instr[31]}}, $instr[7], $instr[30:25], $instr[11:8], 1'b0}:
+                      $is_u_instr ? {$instr[31], $instr[30:20], $instr[19:12], 12'b0} :
+                      $is_j_instr ? {{12{$instr[31]}}, $instr[19:12], $instr[20], $instr[30:21], 1'b0} :
+                      32'b0;
+         
+         $rs2_valid = $is_r_instr || $is_s_instr || $is_b_instr;
+         $rs1_valid = $is_r_instr || $is_s_instr || $is_i_instr || $is_b_instr;
+         $rd_valid = $is_r_instr || $is_i_instr || $is_u_instr || $is_j_instr;
+         $funct3_valid = $is_r_instr || $is_i_instr || $is_s_instr || $is_b_instr;
+         $funct7_valid = $is_r_instr;
+         
+         ?$rs2_valid
+            $rs2[4:0] = $instr[24:20];
+         
+         ?$rs1_valid
+            $rs1[4:0] = $instr[19:15];
+         
+         ?$rd_valid
+            $rd[4:0] = $instr[11:7];
+         
+         ?$funct3_valid
+            $funct3[2:0] = $instr[14:12];
+         
+         ?$funct7_valid
+            $funct7[6:0] = $instr[31:25];
+         
+         $opcode[6:0] = $instr[6:0];
+         
+         $dec_bits[10:0] = {$funct7[5],$funct3,$opcode};
+         
+         $is_beq  = $dec_bits ==? 11'bx0001100011;
+         $is_bne  = $dec_bits ==? 11'bx0011100011;
+         $is_blt  = $dec_bits ==? 11'bx1001100011;
+         $is_bge  = $dec_bits ==? 11'bx1011100011;
+         $is_bltu = $dec_bits ==? 11'bx1101100011;
+         $is_bgeu = $dec_bits ==? 11'bx1111100011;
+         $is_addi = $dec_bits ==? 11'bx0000010011;
+         $is_add  = $dec_bits ==  11'b00000110011;
+```
+
+Below code shows the implementation of decode stage in the MakerChip platform,
+
+<img src="images/Lab7/decode.png" alt="Makerchip_Fetch" width="800"/><br>

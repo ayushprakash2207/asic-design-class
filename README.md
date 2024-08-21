@@ -1115,6 +1115,20 @@ Below code shows the implementation of decode stage in the MakerChip platform,
 
 ### [Register Read and Write](tl_verilog_code/reg_file_read_write.tlv)
 
+Here the Register file is having 2 read line, 1 write line means 2 read and 1 write operation can happen simultanously.
+
+Inputs:
+  * Read_Enable   - Enable signal to perform read operation
+  * Read_Address1 - Address1 from where data has to be read 
+  * Read_Address2 - Address2 from where data has to be read 
+  * Write_Enable  - Enable signal to perform write operation
+  * Write_Address - Address where data has to be written
+  * Write_Data    - Data to be written at Write_Address
+
+Outputs:
+  * Read_Data1    - Data from Read_Address1
+  * Read_Data2    - Data from Read_Address2
+
 Below snippet shows the logic for Register read and write functionality.
 
 <details>
@@ -1154,3 +1168,31 @@ Here, an ALU has also been designed with initially two operations, i.e, ADD and 
 Below snippet shows the implementation of the above logic in the MakerChip platform,
 
 <img src="images/Lab7/RF_Read_Write.png" alt="Makerchip_RF_Read_Write" width="800"/><br>
+
+### [Conditional/Branch Logic](tl_verilog_code/Branch.tlv)
+
+Here, we are calculating the program counter value for a branch instruction, by adding the immediate value to the current program counter. This branch program counter value is fed into the instruction fetch stage incase it is a branch instruction.
+
+Below snippet shows the logic for the Branch Logic,
+
+<details>
+<summary>
+Branch Logic
+</summary>
+<pre>
+//Branch Instructions
+         $taken_br = $is_beq ? ($src1_value == $src2_value) :
+                     $is_bne ? ($src1_value != $src2_value) :
+                     $is_blt ? (($src1_value < $src2_value) ^ ($src1_value[31] != $src2_value[31])) :
+                     $is_bge ? (($src1_value >= $src2_value) ^ ($src1_value[31] != $src2_value[31])) :
+                     $is_bltu ? ($src1_value < $src2_value) :
+                     $is_bgeu ? ($src1_value >= $src2_value) : 1'b0;
+         
+         $br_tgt_pc[31:0] = $pc + $imm;
+</pre>
+</details>
+<br>
+
+Below screenshot we can see the implementation of the branch logic in MakerChip platform,
+
+<img src="images/Lab7/Branch.png" alt="Makerchip_Branch" width="800"/><br>

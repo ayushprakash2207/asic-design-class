@@ -12,28 +12,31 @@
    m5_makerchip_module   // (Expanded in Nav-TLV pane.)
 \TLV
    |calc
-      @1
+      @0
          $reset = *reset;
+      @0
+         $valid = $reset ? 0 : >>1$valid + 1;
+         $valid_or_reset = $valid || $reset; 
    
-         $val1[31:0] = >>2$out[31:0];
-         $val2[31:0] = $rand2[3:0];
-         $sel[1:0] = $rand3[1:0];
-   
-         $sum[31:0] = $val1[31:0] + $val2[31:0];
-         $diff[31:0] = $val1[31:0] - $val2[31:0];
-         $prod[31:0] = $val1[31:0] * $val2[31:0];
-         $quot[31:0] = $val1[31:0] / $val2[31:0];
+      ?$valid
+         @1   
+            $val1[31:0] = >>2$out[31:0];
+            $val2[31:0] = $rand2[3:0];
+            $sel[1:0] = $rand3[1:0];
             
-         $count = $reset ? 0 : >>1$count + 1;
+            $sum[31:0] = $val1[31:0] + $val2[31:0];
+            $diff[31:0] = $val1[31:0] - $val2[31:0];
+            $prod[31:0] = $val1[31:0] * $val2[31:0];
+            $quot[31:0] = $val1[31:0] / $val2[31:0];
+            
+            $count = $reset ? 0 : >>1$count + 1;
          
-      @2
-         $valid = !$count;
-         $calc_reset = $reset | $valid;
-         $out[31:0] = $calc_reset ? 32'b0
-                                  : ($sel[1] ? ($sel[0] ? $quot[31:0] 
-                                                        : $prod[31:0])
-                                             : ($sel[0] ? $diff[31:0] 
-                                                        : $sum[31:0]));
+         @2
+            $out[31:0] = $valid_or_reset ? 32'b0
+                                         : ($sel[1] ? ($sel[0] ? $quot[31:0] 
+                                                               : $prod[31:0])
+                                                    : ($sel[0] ? $diff[31:0] 
+                                                               : $sum[31:0]));
    
    // Assert these to end simulation (before Makerchip cycle limit).
    *passed = *cyc_cnt > 40;

@@ -40,6 +40,7 @@
    |cpu
       @0
          $reset = *reset;
+         $clk_ayu = *clk;
          $pc[31:0] = $reset ? '0 : >>1$pc + 32'd4;
          
          $imem_rd_en = !$reset ? 1 : 0;

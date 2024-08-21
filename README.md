@@ -9,6 +9,7 @@
 6. [Create a C program for Caesar's data encryption and decryption algorithm. Execute the same in GCC and RISC-V GCC compiler.](#Lab5)
 7. [Makerchip Platform and Digital Logic with TL-Verilog.](#Lab6)
 8. [A basic micro-architecture for RISC-V CPU](#Lab7)
+9. [3-Cycle Pipelined RISC-V CPU](#Lab8)
 
 ---
 <a name="Lab1A"></a>
@@ -1196,3 +1197,19 @@ Branch Logic
 Below screenshot we can see the implementation of the branch logic in MakerChip platform,
 
 <img src="images/Lab7/Branch.png" alt="Makerchip_Branch" width="800"/><br>
+
+<a name="Lab8"></a>
+
+## Lab 8: 3-Cycle Pipelined RISC-V CPU
+
+Here, we have implemented a 3-cycle RISC-V CPU by distributing the single cycle architecture into multiple cycle architecture. Also, all the possible pipelining hazards have been taken care of.
+
+### [Complete Pipelined CPU](tl_verilog_code/Pipelined_CPU.tlv)
+
+In the below screenshot, we can observe the output of the sum 1 to 9 program as register r10 = 45.
+
+<img src="images/Lab8/Pipeline_viz.png" alt="Makerchip_Pipeline_Viz" width="800"/><br>
+
+Here, it can be observed that the CPU took 56 cycles to execute the program to calculate sum of numbers from 1 to 9.
+
+<img src="images/Lab8/Pipeline_Log.png" alt="Makerchip_Pipeline_Log" width="800"/><br>

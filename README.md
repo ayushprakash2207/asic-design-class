@@ -1200,6 +1200,8 @@ Below screenshot we can see the implementation of the branch logic in MakerChip 
 
 <a name="Lab8"></a>
 
+---
+
 ## Lab 8: 3-Cycle Pipelined RISC-V CPU
 
 Here, we have implemented a 3-cycle RISC-V CPU by distributing the single cycle architecture into multiple cycle architecture. Also, all the possible pipelining hazards have been taken care of.
@@ -1213,3 +1215,43 @@ In the below screenshot, we can observe the output of the sum 1 to 9 program as 
 Here, it can be observed that the CPU took 56 cycles to execute the program to calculate sum of numbers from 1 to 9.
 
 <img src="images/Lab8/Pipeline_Log.png" alt="Makerchip_Pipeline_Log" width="800"/><br>
+
+
+### [Load and Store Operations](tl_verilog_code/Load_Store_Pipeline_CPU.tlv)
+
+Inputs:
+  * Read_Enable - Enable signal to perform read operation from the memory
+  * Write_Enable - Enable signal to perform write operation to the memory
+  * Address - Address specified whether to read/write from
+  * Write_Data - Data to be written on Address (Store)
+
+Output: 
+  * Read_Data - Data to be read from Address (Load)
+
+Added test case to check functionality of load/store.
+Stored the summation of 1 to 9 on address 4 of Data Memory and loaded value from Data Memory to r15 register.
+
+Below screenshot shows the output of the load and store operations testcase implemented on MakerChip platform,
+
+<img src="images/Lab8/lw_sw_operation.png" alt="Makerchip_Pipeline_Load_Store" width="800"/><br>
+
+### [Final Complete RISC-V CPU](tl_verilog_code/Final_CPU.tlv)
+
+Added support for the jump instructions and added almost all the ALU operations support.
+
+Below screenshots shows the final implementation and simulations on MakerChip Platform.
+
+<img src="images/Lab8/Final_Clk.png" alt="Makerchip_Final_Clock_Signal" width="800"/><br>
+
+The above image shows the clock signal of our RISC-V CPU.
+
+<img src="images/Lab8/Final_Reset.png" alt="Makerchip_Final_Clock_Signal" width="800"/><br>
+
+The above image shows the reset signal of our RISC-V CPU.
+
+<img src="images/Lab8/Final_Reg_Val.png" alt="Makerchip_Final_Clock_Signal" width="800"/><br>
+
+In the above screenshot, we can observe the gradual addition of the sum from 1 to 9 being accumulated in the R14 register. The entire program takes 58 cycles to complete including the load and store operations.
+
+---
+

@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-`include "RV_CPU_Copy.v"
+`include "RV_CPU.v"
 `include "clk_gate.v"
 
 module RV_CPU_tb;
@@ -11,10 +11,10 @@ module RV_CPU_tb;
   wire [9:0] out;
 
   // Instantiate the RV_CPU module
-  rvmyth uut (
-    .CLK(clk),
+  RV_CPU dut (
+    .clk(clk),
     .reset(reset),
-    .OUT(out)
+    .out(out)
   );
 
   // Clock generation
@@ -25,17 +25,11 @@ module RV_CPU_tb;
 
   // Test sequence
   initial begin
-    // Initialize inputs
-    reset = 1;
-
-    // Apply reset for a few cycles
-    #600;
     reset = 0;
+    #50 reset = 1;
+    #250 reset = 0;
 
-    // Simulate for a sufficient time to observe the outputs
-    #5000;
-
-    // Finish the simulation
+    #1100;
     $finish;
   end
 

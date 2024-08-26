@@ -27,7 +27,7 @@ module RV_CPU_tb;
   initial begin
     reset = 0;
     #50 reset = 1;
-    #250 reset = 0;
+    #100 reset = 0;
 
     #1100;
     $finish;

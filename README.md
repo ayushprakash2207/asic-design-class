@@ -10,6 +10,7 @@
 7. [Makerchip Platform and Digital Logic with TL-Verilog.](#Lab6)
 8. [A basic micro-architecture for RISC-V CPU](#Lab7)
 9. [3-Cycle Pipelined RISC-V CPU](#Lab8)
+10. [Conversion of RISC-V CPU tlv code to verilog code](#Lab9)
 
 ---
 <a name="Lab1A"></a>
@@ -1198,9 +1199,9 @@ Below screenshot we can see the implementation of the branch logic in MakerChip 
 
 <img src="images/Lab7/Branch.png" alt="Makerchip_Branch" width="800"/><br>
 
-<a name="Lab8"></a>
-
 ---
+
+<a name="Lab8"></a>
 
 ## Lab 8: 3-Cycle Pipelined RISC-V CPU
 
@@ -1245,13 +1246,102 @@ Below screenshots shows the final implementation and simulations on MakerChip Pl
 
 The above image shows the clock signal of our RISC-V CPU.
 
-<img src="images/Lab8/Final_Reset.png" alt="Makerchip_Final_Clock_Signal" width="800"/><br>
+<img src="images/Lab8/Final_Reset.png" alt="Makerchip_Final_Reset_Signal" width="800"/><br>
 
 The above image shows the reset signal of our RISC-V CPU.
 
-<img src="images/Lab8/Final_Reg_Val.png" alt="Makerchip_Final_Clock_Signal" width="800"/><br>
+<img src="images/Lab8/Final_Reg_Val.png" alt="Makerchip_Final_Reg_Signal" width="800"/><br>
 
 In the above screenshot, we can observe the gradual addition of the sum from 1 to 9 being accumulated in the R14 register. The entire program takes 58 cycles to complete including the load and store operations.
 
 ---
 
+<a name="Lab9"></a>
+
+## Lab 9: Conversion of RISC-V CPU tlv code to verilog code
+
+In this lab, we will convert our tlv code to verilog code using the python's sandpiper-saas library.
+
+Later, post conversion to verilog code, we will also be writing a verilog testbench and compare the waveforms obtained from MakerChip platform and the verilog code output.
+
+Following are the necessary steps to convert the tlv code to verilog code,
+
+### Installation of necessary tools
+
+To install the necessary tools for this activity, execute the following command in the Linux terminal window.
+
+```
+sudo apt install make python python3 python3-pip git iverilog gtkwave python3-venv
+```
+
+### Conversion to verilog code
+
+We will convert our tlv code to verilog format by creating a python virtual environment.
+
+Here, python's virtual environment is used so that when we add additional python libraries, it doesn't affects anything in the entire system.
+
+To create a virtual environment using python, use the following command
+
+```
+python -m venv .venv 
+```
+
+Use the following command to download the python's **sandpiper-saas** module.
+
+```
+pip3 install sandpiper-saas
+```
+
+We will use the sandpiper-saas library to convert our tlv code to verilog code. Use the below command for conversion to verilog code.
+
+```
+sandpiper-saas -i ./tlv_code/Final_CPU.tlv -o RV_CPU.v --bestsv --noline -p verilog --outdir ./src/module/
+```
+
+Verify that the conversion is correct and we don't have any errros.
+
+### Creation of testbench and simulation of the verilog code.
+
+Now, to simulate our verilog code of the RISC-V CPU, we need to write a testbench.
+
+Once the testbench is ready, use the following command to compile the verilog code.
+
+```
+iverilog -o output/RV_CPU.out src/module/RV_CPU_tb.v -I src/include -I src/module
+```
+
+Once the verilog code is compiled successfully, execute the out file to obtain the .vcd file to observe the waveforms using gtkwave
+
+```
+cd output
+./RV_CPU.out
+gtkwave RV_CPU_tb.vcd
+```
+
+### Simulation Results
+
+In this section, we can observe the clk, reset and the 10-bit out signals. The out signal contains the sum of numbers from 1 to 9.
+
+Following are the waveforms from the Makerchip Platform for the tlv code,
+
+<img src="images/Lab8/Final_Clk.png" alt="Makerchip_Final_Clock_Signal" width="800"/><br>
+
+<img src="images/Lab8/Final_Reset.png" alt="Makerchip_Final_Reset_Signal" width="800"/><br>
+
+<img src="images/Lab8/Final_Reg_Val.png" alt="Makerchip_Final_Reg_Signal" width="800"/><br>
+
+Following is the waveform obtained after simulation of our generated verilog code,
+
+<img src="images/Lab9/gtkwave_output.png" alt="Verilog_Waveform" width="800"/><br>
+
+### Results
+
+If we compare the above waveforms, we can see that the result is same for the simulation of tlv code with that of simulation of the converted verilog code.
+
+**clk_ayu** signal represents the clk signal used by our RV-CPU.
+
+**reset** signal is used to reset the CPU whenever required.
+
+**out** is the 10-bit output signal where we can observe the sum of numbers from 1 to 9 happening gradually.
+
+---

@@ -1307,7 +1307,7 @@ Now, to simulate our verilog code of the RISC-V CPU, we need to write a testbenc
 Once the testbench is ready, use the following command to compile the verilog code.
 
 ```
-iverilog -o output/RV_CPU.out tlv_code/RV_CPU_tb.v -I src/include -I src/module
+iverilog -o output/RV_CPU.out src/module/RV_CPU_tb.v -I src/include -I src/module
 ```
 
 Once the verilog code is compiled successfully, execute the out file to obtain the .vcd file to observe the waveforms using gtkwave
@@ -1315,7 +1315,7 @@ Once the verilog code is compiled successfully, execute the out file to obtain t
 ```
 cd output
 ./RV_CPU.out
-gtkwave RV_CPU_tb.v
+gtkwave RV_CPU_tb.vcd
 ```
 
 ### Simulation Results

@@ -1,47 +1,59 @@
 `timescale 1ns / 1ps
 
+`include "vsdbabysoc.v"
+`include "avsddac.v"
+`include "avsdpll.v"
 `include "RV_CPU.v"
 `include "clk_gate.v"
 
-module RV_CPU_tb;
+module vsdbabysoc_tb;
+   reg       reset;
+   reg       VCO_IN;
+   reg       ENb_CP;
+   reg       ENb_VCO;
+   reg       REF;
+   reg  real VREFL;
+   reg  real VREFH;
+   wire real OUT;
 
-  // Testbench signals
-  reg clk;
-  reg reset;
-  wire [9:0] out;
+   vsdbabysoc uut (
+      .OUT(OUT),
+      .reset(reset),
+      .VCO_IN(VCO_IN),
+      .ENb_CP(ENb_CP),
+      .ENb_VCO(ENb_VCO),
+      .REF(REF),
+      // .VREFL(VREFL),
+      .VREFH(VREFH)
+   );
 
-  // Instantiate the RV_CPU module
-  RV_CPU dut (
-    .clk(clk),
-    .reset(reset),
-    .out(out)
-  );
-
-  // Clock generation
-  initial begin
-    clk = 0;
-    forever #5 clk = ~clk;  // Adjust clock period as necessary
-  end
-
-  // Test sequence
-  initial begin
-    reset = 0;
-    #50 reset = 1;
-    #100 reset = 0;
-
-    #1100;
-    $finish;
-  end
-
-  // Monitor the outputs
-  initial begin
-    $monitor("Time: %t | OUT: %b", $time, out);
-  end
-
-  // Dump waveform data
-  initial begin
-    $dumpfile("RV_CPU_tb.vcd");  // Name of the dump file
-    $dumpvars(0, RV_CPU_tb);     // Dump all variables in the testbench
-  end
-
+   initial begin
+      reset = 0;
+      VREFL = 0.0;
+      VREFH = 3.3;
+      {REF, ENb_VCO} = 0;
+      VCO_IN = 1'b0 ;
+      
+      #20 reset = 1;
+      #100 reset = 0;
+   end
+   
+   initial begin
+`ifdef PRE_SYNTH_SIM
+      $dumpfile("pre_synth_sim.vcd");
+`elsif POST_SYNTH_SIM
+      $dumpfile("post_synth_sim.vcd");
+`endif
+      $dumpvars(0, vsdbabysoc_tb);
+   end
+ 
+   initial begin
+      repeat(600) begin
+         ENb_VCO = 1;
+         #100 REF = ~REF;
+         #(83.33/2) VCO_IN = ~VCO_IN;
+      end
+      $finish;
+   end
+   
 endmodule

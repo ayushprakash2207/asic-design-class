@@ -1466,4 +1466,8 @@ In the below screenshot, the output of the sum 1 to 9 can be observed after simu
 * **out** is the ouput signal from the RISC-V CPU. Here we can observe the sum value from 1 to 9 over multiple clock cycles.
 * **OUT** is the DAC output signal.
 
+Below is the zoomed out version of the same above waveform screenshot,
+
+<img src="images/Lab10/tb_output_full.png" alt="gtkwave_zo" width="800"/><br>
+
 ---

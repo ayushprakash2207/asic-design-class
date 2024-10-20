@@ -1017,7 +1017,11 @@ In the below screenshot, we can see the implementation of our code on the MakerC
 ---
 
 <a name="Lab7"></a>
-## Lab 7: A basic micro-architecture for RISC-V CPU
+
+<details>
+<summary>
+Lab 7: A basic micro-architecture for RISC-V CPU
+</summary>
 
 ### [Fetch](tl_verilog_code/fetch.tlv)
 
@@ -1211,10 +1215,16 @@ Below screenshot we can see the implementation of the branch logic in MakerChip 
 <img src="images/Lab7/Branch.png" alt="Makerchip_Branch" width="800"/><br>
 
 ---
+</details>
+
+---
 
 <a name="Lab8"></a>
 
-## Lab 8: 3-Cycle Pipelined RISC-V CPU
+<details>
+<summary>
+Lab 8: 3-Cycle Pipelined RISC-V CPU
+</summary>
 
 Here, we have implemented a 3-cycle RISC-V CPU by distributing the single cycle architecture into multiple cycle architecture. Also, all the possible pipelining hazards have been taken care of.
 
@@ -1265,11 +1275,16 @@ The above image shows the reset signal of our RISC-V CPU.
 
 In the above screenshot, we can observe the gradual addition of the sum from 1 to 9 being accumulated in the R14 register. The entire program takes 58 cycles to complete including the load and store operations.
 
+</details>
+
 ---
 
 <a name="Lab9"></a>
 
-## Lab 9: Conversion of RISC-V CPU tlv code to verilog code
+<details>
+<summary>
+Lab 9: Conversion of RISC-V CPU tlv code to verilog code
+</summary>
 
 In this lab, we will convert our tlv code to verilog code using the python's sandpiper-saas library.
 
@@ -1355,11 +1370,16 @@ If we compare the above waveforms, we can see that the result is same for the si
 
 **out** is the 10-bit output signal where we can observe the sum of numbers from 1 to 9 happening gradually.
 
+</details>
+
 ---
 
 <a name="Lab10"></a>
 
-## Lab 10: Tools Installation and BabySoC Simulation
+<details>
+<summary>
+Lab 10: Tools Installation and BabySoC Simulation
+</summary>
 
 ### Tools Installation
 
@@ -1470,4 +1490,139 @@ Below is the zoomed out version of the same above waveform screenshot,
 
 <img src="images/Lab10/tb_output_full.png" alt="gtkwave_zo" width="800"/><br>
 
+</details>
+
 ---
+
+<a name="Lab11"></a>
+
+## Lab 11: RTL Design using Verilog and SKY130 Technology
+
+## Introduction to iverilog and gtkwave
+
+Below is the command to simulate the RTL design for a 2 input MUX along with it's testbench using iverilog,
+
+<img src="images/Lab11/11_1.png" alt="iverilog" width="800"/><br>
+
+Once, the compilation happens, an executable is generated. This executable can be run to observe the output with variations in input signal specified by the testbench.
+
+<img src="images/Lab11/11_2.png" alt="a_out_execute" width="800"/><br>
+
+To observe the output, we use the gtkwave to open the generated vcd file,
+
+<img src="images/Lab11/11_3.png" alt="gtkwave" width="800"/><br>
+
+## Introduction to Synthesis and Yosys
+
+### What is Synthesis ?
+
+The process of conversion of an RTL behavioural design into a gate level netlist is known as Synthesis.
+
+### What is Synthesizer?
+
+The tool used to convert the RTL design to netlist is known as Synthesizer. In our course, **Yosys** is the Synthesizer.
+
+Below image briefly depicts the flow of Synthesis,
+
+<img src="images/Lab11/11_4.png" alt="Synthesis_Flow" width="800"/><br>
+
+The **.lib** or the **Front End Library** contains a collection of logical modules. It includes basic gates such as AND, OR, NOT etc. It can have gates with different number of inputs, having different speeds.
+
+To satisfy the requirements for Setup and Hold time, we require gate with different speeds.
+
+Often we need to guide the Synthesizer to select the appropriate gate sizes for the implementation of the logic.
+
+If we use more faster cells, then the circuit may violate the hold time requirements and the circuit may be bad in terms of Power and Area.
+
+If more slower cells are used, then the designed circuit may become sluggish and it may not meet the design requirements.
+
+This guidance is often provided to the Synthesizer as a Constraint.
+
+## RTL to netlist conversion using Yosys
+
+First, we need to read the SKY130 library file in yosys. Below is the command used,
+
+```
+read_liberty -lib lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+```
+
+To read the verilog file into Yosys, use the below command. Make sure that there is no error once the Verilog file is loaded.
+
+```
+read_verilog verilog_files/good_mux.v
+```
+
+Below is the command to start the Synthesis project,
+
+```
+synth -top good_mux
+```
+
+Following is the result, after the process of Synthesis,
+
+<img src="images/Lab11/11_5.png" alt="Synthesis_Results" width="800"/><br>
+
+To generate the netlist, following command needs to executed
+
+```
+abc -liberty lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+```
+
+
+Below is the output for the above command to generate the netlist,
+
+<img src="images/Lab11/11_6.png" alt="Netlist" width="800"/><br>
+
+To observe the implementation in a graphical manner, run the following command,
+
+```
+show
+```
+
+Below the visual representation of the netlist,
+
+<img src="images/Lab11/11_7.png" alt="Netlist_Graph" width="800"/><br>
+
+To dump the verilog code for the netlist with minimal information, use the command below
+
+```
+write_verilog -noattr verilog_files/good_mux_netlist.v
+```
+
+Below is the generated netlist for a 2:1 MUX,
+
+<details>
+<summary>
+2:1 MUX netlist
+</summary>
+
+```
+/* Generated by Yosys 0.44+60 (git sha1 0fc5812dc, g++ 13.2.0-23ubuntu4 -fPIC -O3) */
+
+module good_mux(i0, i1, sel, y);
+  wire _0_;
+  wire _1_;
+  wire _2_;
+  wire _3_;
+  input i0;
+  wire i0;
+  input i1;
+  wire i1;
+  input sel;
+  wire sel;
+  output y;
+  wire y;
+  sky130_fd_sc_hd__mux2_1 _4_ (
+    .A0(_0_),
+    .A1(_1_),
+    .S(_2_),
+    .X(_3_)
+  );
+  assign _0_ = i0;
+  assign _1_ = i1;
+  assign _2_ = sel;
+  assign y = _3_;
+endmodule
+```
+
+</details>

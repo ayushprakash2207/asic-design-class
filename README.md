@@ -15,6 +15,7 @@
 12. [RTL Design using Verilog and SKY130 Technology](#Lab11)
     1. [Introduction to Synthesis and Yosys](#Lab11_1)
     2. [RTL to netlist conversion using Yosys](#Lab11_2)
+    3. [Introduction to SKY130 library file](#Lab11_3)
 
 ---
 <a name="Lab1A"></a>
@@ -1633,3 +1634,78 @@ endmodule
 ```
 
 </details>
+
+<a name="Lab11_3"></a>
+
+## Introduction to SKY130 library file
+
+The name of the library file is **sky130_fd_sc_hd__tt_025C_1v80**
+
+* It is a 130 nm library
+* **tt** stands for typical
+* **025C** denotes the temperature
+* **1v8** indicates the voltage
+
+Any library would contain information about,
+
+* **Process**: It defines characteristics of the chip to be designed using the particular library due to variations in fabrication
+* **Voltage**: This defines the behaviour of the Sillicon with respect to variations in voltage.
+* **Temperature**: Defines the optimal temperature at which the library is defined.
+
+
+Further, if we explore the library we can observe the following information,
+
+* The technology used in this library is **cmos**
+* Delay model is **table_lookup**.
+* Time unit is **nano Seconds**
+* Current unit is **milli Amperes**
+* Power unit is **milli Watts**
+* Resistance unit is **KOhms**
+* Capacitance unit is **picoFarads**
+* Operating Conditions is mentioned in terms of **PVT** as **tt_025C_1v80**
+
+### Standard Cell Information
+
+We know that a library file contains a collection of standard cells.
+
+Below screenshot shows the information about one of the cells present in the library files,
+
+<img src="images/Lab11/11_8.png" alt="Standard_Cell" width="800"/><br>
+
+The behaviour of the particular cell can be described as follows,
+
+```
+X = ((A1 & A2) | B1 | C1 | D1)
+```
+
+So, a total of 32 input combinations possible. So the cell information will contain the details about the Power and Delay for all such 32 input combinations.
+
+Later, if we inspect the information about the cell, we can further information,
+
+* Details about Area
+* Details abput Power Pins
+* Details of Input pins like the Capacitance, Power, Transition information etc.
+
+### Comparison of AND2_0 gate and AND2_2 gate variants
+
+Below image shows a side by side comparison of the AND2_0 gate and AND2_2 gate variants,
+
+<img src="images/Lab11/11_9.png" alt="2ANDvs3AND" width="800"/><br>
+
+Here, if we look closely at the **Area** information, we can observe AND2_2 has more area than AND2_0, which means that wider transistors are used to implement AND2_2.
+
+Also, if we look at the power information, we can see that AND2_2 uses more power as it is using wider transistors.
+
+### Lookup table Delay Model
+
+The delay model in such files typically relies on lookup tables (LUTs) based on different signal conditions. The table_lookup is used to model delays based on input conditions such as:
+
+* Input Slew (transition time at the input)
+* Output Load (the capacitance at the output pin)
+* Voltage and Temperature (for different operating conditions)
+
+The idea is that the delay (or transition time) is not fixed, but varies according to these input conditions. The delay is pre-characterized for different combinations of slew rates and load capacitances, and these values are stored in a multi-dimensional table (hence the lookup). When the timing engine calculates delays, it uses interpolation to derive the delay from these tables.
+
+<a name="Lab11_4"></a>
+
+## Hierarchial vs Flat Synthesis

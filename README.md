@@ -12,6 +12,9 @@
 9. [3-Cycle Pipelined RISC-V CPU](#Lab8)
 10. [Conversion of RISC-V CPU tlv code to verilog code](#Lab9)
 11. [Tool Installation and BabySoC Simulation](#Lab10)
+12. [RTL Design using Verilog and SKY130 Technology](#Lab11)
+    1. [Introduction to Synthesis and Yosys](#Lab11_1)
+    2. [RTL to netlist conversion using Yosys](#Lab11_2)
 
 ---
 <a name="Lab1A"></a>
@@ -1512,6 +1515,8 @@ To observe the output, we use the gtkwave to open the generated vcd file,
 
 <img src="images/Lab11/11_3.png" alt="gtkwave" width="800"/><br>
 
+<a name="Lab11_1"></a>
+
 ## Introduction to Synthesis and Yosys
 
 ### What is Synthesis ?
@@ -1537,6 +1542,8 @@ If we use more faster cells, then the circuit may violate the hold time requirem
 If more slower cells are used, then the designed circuit may become sluggish and it may not meet the design requirements.
 
 This guidance is often provided to the Synthesizer as a Constraint.
+
+<a name="Lab11_2"></a>
 
 ## RTL to netlist conversion using Yosys
 

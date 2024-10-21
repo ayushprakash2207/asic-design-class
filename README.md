@@ -1931,3 +1931,102 @@ From the netlist, we can see that there is direct instantiation of the AND and O
 
 ## Flop Coding Styles and Optimizations
 
+### D Flip-flop with Asynchronous Reset
+
+Let's simulate the D Flip-flop with Asynchronous Reset in iverilog.
+
+To compile the verilog code, following is the command
+
+```
+iverilog verilog_files/dff_asyncres.v verilog_files/tb_dff_asyncres.v
+```
+
+To execute the generated out file, following is the command,
+```
+./a.out
+```
+
+Finally, to observe the waveform with variations in inputs defined in the inputs, following is the command,
+```
+gtkwave tb_dff_asyncres.vcd
+```
+
+Below is how the waveform looks for a D flip-flop with asynchronous reset
+
+<img src="images/Lab11/11_13.png" alt="DFF_Async_Reset" width="800"/><br>
+
+We can clearly see that as soon as reset signal goes from high to low, the output q starts following input d.
+
+#### Synthesis using Yosys
+
+To synthesize the D flip-flop, use the following command, 
+
+```
+read_liberty -lib lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog verilog_files/dff_asyncres.v
+synth -top dff_asyncres
+dfflibmap -liberty lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+
+Below is the graphical representation of the synthesized design,
+<img src="images/Lab11/11_16.png" alt="DFF_Async_Reset" width="800"/><br>
+
+### D Flip-flop with Asynchronous Set
+
+To compile the verilog code, following is the command
+
+```
+iverilog verilog_files/dff_async_set.v verilog_files/tb_dff_async_set.v 
+```
+
+To execute the generated out file, following is the command,
+```
+./a.out
+```
+
+Finally, to observe the waveform with variations in inputs defined in the inputs, following is the command,
+```
+gtkwave tb_dff_async_set.vcd
+```
+
+Below is how the waveform looks for a D flip-flop with asynchronous set
+
+<img src="images/Lab11/11_14.png" alt="DFF_Async_Set" width="800"/><br>
+
+We can clearly see that as soon as set signal goes from low to high, the output q is set to 1 irrespective of the clock's active edge.
+
+#### Synthesis using Yosys
+
+Below is the graphical representation of the synthesized design,
+<img src="images/Lab11/11_17.png" alt="DFF_Async_Reset" width="800"/><br>
+
+### D Flip-flop with Synchronous Reset
+
+To compile the verilog code, following is the command
+
+```
+iverilog verilog_files/dff_syncres.v verilog_files/tb_dff_syncres.v
+```
+
+To execute the generated out file, following is the command,
+```
+./a.out
+```
+
+Finally, to observe the waveform with variations in inputs defined in the inputs, following is the command,
+```
+gtkwave tb_dff_syncres.vcd
+```
+
+Below is how the waveform looks for a D flip-flop with Synchronous Reset
+
+<img src="images/Lab11/11_15.png" alt="DFF_Sync_Reset" width="800"/><br>
+
+We can clearly see that as soon as reset signal goes from low to high, the output q is set to 0 at the next active clock edge.
+
+#### Synthesis using Yosys
+
+Below is the graphical representation of the synthesized design,
+<img src="images/Lab11/11_18.png" alt="DFF_Async_Reset" width="800"/><br>

@@ -2662,15 +2662,16 @@ endmodule
 #### ternary_operator_mux.v
 
 Below is the simulation of the behaviour design using iverilog and gtkwave,
+
 <img src="images/Lab11/11_43.png" alt="DFF_Async_Reset" width="800"/><br>
 
 Following is the post synthesis report for the same design,
-<img src="images/Lab11/11_44
-.png" alt="DFF_Async_Reset" width="800"/><br>
+
+<img src="images/Lab11/11_44.png" alt="DFF_Async_Reset" width="800"/><br>
 
 In the below screenshot, we can observe the graphical representation of the synthesized design,
-<img src="images/Lab11/11_45
-.png" alt="DFF_Async_Reset" width="800"/><br>
+
+<img src="images/Lab11/11_45.png" alt="DFF_Async_Reset" width="800"/><br>
 
 <details>
 <summary>
@@ -2710,8 +2711,7 @@ endmodule
 
 Below screenshot shows the simulation of the generated netlist with the same testbench,
 
-<img src="images/Lab11/11_46
-.png" alt="DFF_Async_Reset" width="800"/><br>
+<img src="images/Lab11/11_46.png" alt="DFF_Async_Reset" width="800"/><br>
 
 #### good_mux.v
 
@@ -2719,12 +2719,10 @@ Below is the simulation of the behaviour design using iverilog and gtkwave,
 <img src="images/Lab11/11_47.png" alt="DFF_Async_Reset" width="800"/><br>
 
 Following is the post synthesis report for the same design,
-<img src="images/Lab11/11_48
-.png" alt="DFF_Async_Reset" width="800"/><br>
+<img src="images/Lab11/11_48.png" alt="DFF_Async_Reset" width="800"/><br>
 
 In the below screenshot, we can observe the graphical representation of the synthesized design,
-<img src="images/Lab11/11_49
-.png" alt="DFF_Async_Reset" width="800"/><br>
+<img src="images/Lab11/11_49.png" alt="DFF_Async_Reset" width="800"/><br>
 
 <details>
 <summary>
@@ -2764,8 +2762,7 @@ endmodule
 
 Below screenshot shows the simulation of the generated netlist with the same testbench,
 
-<img src="images/Lab11/11_50
-.png" alt="DFF_Async_Reset" width="800"/><br>
+<img src="images/Lab11/11_50.png" alt="DFF_Async_Reset" width="800"/><br>
 
 #### bad_mux.v
 
@@ -2773,12 +2770,10 @@ Below is the simulation of the behaviour design using iverilog and gtkwave,
 <img src="images/Lab11/11_51.png" alt="DFF_Async_Reset" width="800"/><br>
 
 Following is the post synthesis report for the same design,
-<img src="images/Lab11/11_52
-.png" alt="DFF_Async_Reset" width="800"/><br>
+<img src="images/Lab11/11_52.png" alt="DFF_Async_Reset" width="800"/><br>
 
 In the below screenshot, we can observe the graphical representation of the synthesized design,
-<img src="images/Lab11/11_53
-.png" alt="DFF_Async_Reset" width="800"/><br>
+<img src="images/Lab11/11_53.png" alt="DFF_Async_Reset" width="800"/><br>
 
 <details>
 <summary>
@@ -2818,5 +2813,4 @@ endmodule
 
 Below screenshot shows the simulation of the generated netlist with the same testbench,
 
-<img src="images/Lab11/11_54
-.png" alt="DFF_Async_Reset" width="800"/><br>
+<img src="images/Lab11/11_54.png" alt="DFF_Async_Reset" width="800"/><br>

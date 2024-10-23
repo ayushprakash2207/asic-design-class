@@ -1,10 +1,20 @@
 `timescale 1ns / 1ps
 
-`include "vsdbabysoc.v"
-`include "avsddac.v"
-`include "avsdpll.v"
-`include "RV_CPU.v"
-`include "clk_gate.v"
+
+`ifdef PRE_SYNTH_SIM
+   `include "vsdbabysoc.v"
+   `include "avsddac.v"
+   `include "avsdpll.v"
+   `include "RV_CPU.v"
+   `include "clk_gate.v"
+`elsif POST_SYNTH_SIM
+   `include "vsdbabysoc.v"
+   `include "avsddac.v"
+   `include "avsdpll.v"
+   `include "RV_CPU_netlist.v"
+   `include "primitives.v"
+   `include "sky130_fd_sc_hd.v"
+`endif
 
 module vsdbabysoc_tb;
    reg       reset;

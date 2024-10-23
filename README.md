@@ -20,6 +20,7 @@
     5. [Flop Coding Styles and Optimizations](#Lab11_5)
     6. [Combinational and Sequential Optimizations](#Lab11_6)
     7. [GLS, Blocking v/s Non-Blocking and Synthesis-Simulation Mismatch](#Lab11_7)
+13. [Risc-V Core Synthesis using Yosys and Post Synthesis BabySoc Simulation](#Lab12)
 
 ---
 <a name="Lab1A"></a>
@@ -3107,5 +3108,64 @@ gtkwave tb_blocking_caveat.vcd
 Below screenshot shows the simulation of the generated netlist with the same testbench,
 
 <img src="images/Lab11/11_58.png" alt="DFF_Async_Reset" width="800"/><br>
+
+---
+
+<a name="Lab12"></a>
+
+## Lab 11: Risc-V Core Synthesis using Yosys and Post Synthesis BabySoc Simulation
+
+In this task, we will synthesize our RISC-V core which was earlier designed in verilog HDL.
+
+```
+read_liberty -lib lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog -I src/include/ -I src/module/ src/module/clk_gate.v src/module/RV_CPU.v
+synth -v RV_CPU
+dfflibmap -liberty lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+write_verilog -noattr src/module/RV_CPU_netlist.v
+```
+Below screenshot shows the synthesis output report,
+
+<img src="images/Lab12/12_1.png" alt="DFF_Async_Reset" width="800"/><br>
+
+
+<br>
+
+After generating the netlist, we will be doing the gate level simulation with the BabySoC model. 
+
+The BabySoC model will be having the gate level synthesized CPU core, DAC module and PLL module.
+
+Following are the commands to compile using iverilog and waveform visualization using gtkwave,
+
+```
+iverilog -DFUNCTIONAL -DUNIT_DELAY=#1 -DPOST_SYNTH_SIM src/module/RV_CPU_tb.v -I src/module/ -I src/include/ -I lib/verilog_model/
+./a.out
+gtkwave post_synth_sim.vcd
+```
+
+Following screenshot shows the gate level synthesis simulation output in gtkwave,
+
+<img src="images/Lab12/12_2.png" alt="DFF_Async_Reset" width="800"/><br>
+
+Below screenshot shows the output waveform more zoomed-in,
+
+<img src="images/Lab12/12_3.png" alt="DFF_Async_Reset" width="800"/><br>
+
+
+If we compare the above waveforms with the pre synthesis waveforms, we can observe that the results are same.
+
+Below is the screenshot which shows output waveform for simulation before synthesis,
+
+<img src="images/Lab10/tb_output_full.png" alt="DFF_Async_Reset" width="800"/><br>
+
+
+Following screenshot shows some of the standard cells implemented in the synthesized verilog file,
+
+<img src="images/Lab12/12_4.png" alt="DFF_Async_Reset" width="800"/><br>
+
+Below screenshot shows the signals of a standard cell,
+
+<img src="images/Lab12/12_5.png" alt="DFF_Async_Reset" width="800"/><br>
 
 ---

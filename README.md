@@ -3120,7 +3120,7 @@ In this task, we will synthesize our RISC-V core which was earlier designed in v
 ```
 read_liberty -lib lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 read_verilog -I src/include/ -I src/module/ src/module/clk_gate.v src/module/RV_CPU.v
-synth -v RV_CPU
+synth -top RV_CPU
 dfflibmap -liberty lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 abc -liberty lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 write_verilog -noattr src/module/RV_CPU_netlist.v

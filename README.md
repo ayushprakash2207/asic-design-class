@@ -21,7 +21,7 @@
     6. [Combinational and Sequential Optimizations](#Lab11_6)
     7. [GLS, Blocking v/s Non-Blocking and Synthesis-Simulation Mismatch](#Lab11_7)
 13. [Risc-V Core Synthesis using Yosys and Post Synthesis BabySoc Simulation](#Lab12)
-14. [Static Timing Analysis for Synthesized Risc-V Core using OpenSTA](#Lab13)
+14. [Static Timing Analysis for Synthesized VSDBabySoC using OpenSTA](#Lab13)
 
 ---
 <a name="Lab1A"></a>
@@ -3190,7 +3190,7 @@ Below screenshot shows the signals of a standard cell,
 <a name="Lab13"></a>
 
 
-## Lab 13: Static Timing Analysis for Synthesized Risc-V Core using OpenSTA
+## Lab 13: Static Timing Analysis for Synthesized VSDBabySoC using OpenSTA
 
 ### What is STA?
 
@@ -3268,26 +3268,20 @@ A clk2reg path (clock-to-register path) refers to a timing path in a digital cir
 
 6. **Clock Diagram Crossing**: If the register is part of a different clock domain, the clk2reg analysis will also involve considerations for synchronization and potential metastability issues.
 
-### STA for the synthesized RISC-V Core
+### STA for the synthesized VSDBabySoC
 
 Here, in this activity we will be generating setup and hold timing reports for our Synthesized RISC-V Core module.
 
-Following are the commands to generate the reports,
+Following are the constraints provided to the STA tool as a sdc file to generate timing reports,
 
 ```
-read_liberty lib/sta/sky130_fd_sc_hd__tt_025C_1v80.lib
-read_verilog src/module/RV_CPU_netlist.v
-link_design RV_CPU
+set_units -time ns
 
-create_clock -name clk -period 10.35 [get_ports clk]
+create_clock [get_pins {pll/CLK}] -name clk -period 10.35
 set_clock_uncertainty [expr 0.05 * 10.35] -setup [get_clocks clk]
 set_clock_uncertainty [expr 0.08 * 10.35] -hold [get_clocks clk]
 set_clock_transition [expr 0.05 * 10.35] [get_clocks clk]
 set_input_transition [expr 0.08 * 10.35] [all_inputs]
-
-
-report_checks -path_delay max
-report_checks -path_delay min
 ```
 
 * The clock period has been specified as 10.35 ns.
@@ -3295,6 +3289,26 @@ report_checks -path_delay min
 * The clock transition is defined as 5% of the defined clock period
 * The hold uncertainity is set as 8% of the clock period
 * The input data transition is set as 8% of the defined clock period
+
+To execute the OpenSTA and obtain the timing reports, run the below command,
+
+```
+sta scripts/sta.conf
+```
+
+Following are contents of the **sta.conf** file,
+
+```
+read_liberty -min ./lib/sta/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_liberty -max ./lib/sta/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_liberty -min ./lib/avsdpll.lib
+read_liberty -max ./lib/avsdpll.lib
+read_liberty -min ./lib/avsddac.lib
+read_liberty -max ./lib/avsddac.lib
+read_verilog ./src/module/vsdbabysoc_synth.v
+link_design vsdbabysoc
+read_sdc ./src/sdc/sta_post_synth.sdc
+```
 
 
 In the below screenshot, we can observe the timing report for a reg2reg max path,
@@ -3307,5 +3321,7 @@ Below screenshot shows the reg2reg min path report,
 
 
 The max path report is for the Setup Slack and the min path report is for the Hold Slack.
+
+We can conclude that the timing constraints are not met for our design by observing the OpenSTA Timing reports.
 
 ---

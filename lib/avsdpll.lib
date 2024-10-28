@@ -51,28 +51,11 @@ library (avsdpll) {
       capacitance : 0.001;
     }
 
-    //pin (GND#2) {
-    //  direction : input;
-    //  max_transition : 2.5;
-    //  capacitance : 0.001;
-    //}
-
     pin (VDD) {
       direction : input;
       max_transition : 2.5;
       capacitance : 0.001;
     }
     
-    //pin (VDD#2) {
-    //  direction : input;
-    //  max_transition : 2.5;
-    //  capacitance : 0.001;
-    //}
-
-    //pin (VDD#3) {
-    //  direction : input;
-    //  max_transition : 2.5;
-    //  capacitance : 0.001;
-    //}
   }
 } 

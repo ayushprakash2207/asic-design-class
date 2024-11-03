@@ -3190,8 +3190,12 @@ Below screenshot shows the signals of a standard cell,
 
 <a name="Lab13"></a>
 
+<details>
 
-## Lab 13: Static Timing Analysis for Synthesized VSDBabySoC using OpenSTA
+<summary>
+Lab 13: Static Timing Analysis for Synthesized VSDBabySoC using OpenSTA
+</summary>
+
 
 ### What is STA?
 
@@ -3324,6 +3328,8 @@ Below screenshot shows the reg2reg min path report,
 The max path report is for the Setup Slack and the min path report is for the Hold Slack.
 
 We can conclude that the timing constraints are not met for our design by observing the OpenSTA Timing reports.
+
+</details>
 
 ---
 

@@ -3547,6 +3547,14 @@ Following graph shows the worst hold slack measured for different library files,
 
 <img src="images/Lab14/WHS.png" alt="DFF_Async_Reset" width="800"/><br>
 
+Following graph shows the total negative slack measured for different library files,
+
+<img src="images/Lab14/TNS.png" alt="DFF_Async_Reset" width="800"/><br>
+
+Following graph shows the worst negative slack measured for different library files,
+
+<img src="images/Lab14/WNS.png" alt="DFF_Async_Reset" width="800"/><br>
+
 
 
 ---

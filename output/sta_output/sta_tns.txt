@@ -1,0 +1,32 @@
+sky130_fd_sc_hd__ff_100C_1v65.lib
+tns 0.0000
+sky130_fd_sc_hd__ff_100C_1v95.lib
+tns 0.0000
+sky130_fd_sc_hd__ff_n40C_1v56.lib
+tns -459.7101
+sky130_fd_sc_hd__ff_n40C_1v65.lib
+tns -44.7922
+sky130_fd_sc_hd__ff_n40C_1v76.lib
+tns 0.0000
+sky130_fd_sc_hd__ff_n40C_1v95.lib
+tns 0.0000
+sky130_fd_sc_hd__ss_100C_1v40.lib
+tns -16574.8457
+sky130_fd_sc_hd__ss_100C_1v60.lib
+tns -7998.1904
+sky130_fd_sc_hd__ss_n40C_1v28.lib
+tns -79316.2578
+sky130_fd_sc_hd__ss_n40C_1v35.lib
+tns -49235.1523
+sky130_fd_sc_hd__ss_n40C_1v40.lib
+tns -37474.4141
+sky130_fd_sc_hd__ss_n40C_1v44.lib
+tns -31499.4082
+sky130_fd_sc_hd__ss_n40C_1v60.lib
+tns -14843.1445
+sky130_fd_sc_hd__ss_n40C_1v76.lib
+tns -8296.2363
+sky130_fd_sc_hd__tt_025C_1v80.lib
+tns -104.8013
+sky130_fd_sc_hd__tt_100C_1v80.lib
+tns -56.2416

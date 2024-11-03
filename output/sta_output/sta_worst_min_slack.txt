@@ -1,0 +1,32 @@
+sky130_fd_sc_hd__ff_100C_1v65.lib
+worst slack -0.5468
+sky130_fd_sc_hd__ff_100C_1v95.lib
+worst slack -0.6055
+sky130_fd_sc_hd__ff_n40C_1v56.lib
+worst slack -0.4861
+sky130_fd_sc_hd__ff_n40C_1v65.lib
+worst slack -0.5264
+sky130_fd_sc_hd__ff_n40C_1v76.lib
+worst slack -0.5620
+sky130_fd_sc_hd__ff_n40C_1v95.lib
+worst slack -0.6047
+sky130_fd_sc_hd__ss_100C_1v40.lib
+worst slack 0.1888
+sky130_fd_sc_hd__ss_100C_1v60.lib
+worst slack -0.0884
+sky130_fd_sc_hd__ss_n40C_1v28.lib
+worst slack 1.0882
+sky130_fd_sc_hd__ss_n40C_1v35.lib
+worst slack 0.6237
+sky130_fd_sc_hd__ss_n40C_1v40.lib
+worst slack 0.4006
+sky130_fd_sc_hd__ss_n40C_1v44.lib
+worst slack 0.2634
+sky130_fd_sc_hd__ss_n40C_1v60.lib
+worst slack -0.0671
+sky130_fd_sc_hd__ss_n40C_1v76.lib
+worst slack -0.2850
+sky130_fd_sc_hd__tt_025C_1v80.lib
+worst slack -0.4840
+sky130_fd_sc_hd__tt_100C_1v80.lib
+worst slack -0.4859

@@ -3661,3 +3661,231 @@ The routed .def file is used my Magic to generate the GDSII file
 <details>
 <summary>Execution of 'picorv32a' using OpenLane flow</summary>
 </details>
+
+### Day-2
+
+
+### Day-3
+
+
+Following are the steps to clone the VSD Std. Cell Design Repo and view the layout of the inverter using magic tool,
+
+```
+git clone https://github.com/nickson-jose/vsdstdcelldesign.git
+cd vsdstdcelldesign
+cp /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech .
+magic -T sky130A.tech sky130_ayush_inv.mag &
+```
+
+Below screenshot shows the layout of the inverter,
+
+<img src="images/Lab15/15_3_1.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+
+Follow the below commands in the magic tool tkcon window to extract the custom inverter layout into spice netlist,
+
+```
+pwd
+extract all
+ext2spice cthresh 0 rthresh 0
+ext2spice
+```
+
+Below screenshot shows the extracted spice parameters,
+
+<img src="images/Lab15/15_3_2.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+
+<details>
+  <summary>Inception of Layout and CMOS Fabrication Process </summary>
+
+  #### 16-Mask CMOS Fabrication
+
+  16-Mask CMOS Fabrication encompasses several critical phases for crafting integrated circuits.<br />
+
+  1. Substrate Selection.<br />
+       This is the most initial phase of the process where the subrstrate is chosen.Here we are chosing a p-substrate.<br />
+<img src="images/Lab15/15_3_3.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+  2. Active region creation.<br />
+      This is done to isolate the active regions for transistors, the process begins with the deposition of SiO2 and Si3N4 layers, followed by photolithography and silicon nitride etching.This is also known as LOCOS (Local Oxidation of Silicon),where oxide is grown in certain regions. The Si3N4 layer is removed using hot H2SO4.<br />
+      <img src="images/Lab15/15_3_4.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+  3. N-Well and P-Well Formation.<br />
+     The N-well and P-well regions are created separately.Ion implanation by Boron for P-well and by Phosphorous for N-well formation.High-temperature furnace processes drive-in diffusion to establish well depths, known as the tub process.<br />
+     <img src="images/Lab15/15_3_5.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+  4. Gate Formation.<br />
+     The gate is a very important CMOS transistor terminal that controls threshold voltages for transistor switching. NMOS and PMOS gates formed by photolithography techniques.Important parameters for gate formation include oxide capacitance and doping concentration.<br />
+     <img src="images/Lab15/15_3_6.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+
+  5. Lightly dopped Drain(LDD).<br />
+     LDD formed to avoid the hot electron effect.<br />
+    <img src="images/Lab15/15_3_7.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+
+  6. Source and Drain Formation.<br />
+      Screen oxide added to avoid channelling during implants followed by Aresenic implantation and high temperature annealing.<br />
+    <img src="images/Lab15/15_3_8.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+  7. Local Interconnect Formation.<br />
+     Removal of screen oxide by HF etching and deposition of Ti for low resistant contacts is done.Heat treatment results in chemical reactions, producing low-resistant titanium silicon dioxide for interconnect contacts and titanium nitride for top-level connections, enabling local communication.
+     <img src="images/Lab15/15_3_9.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+  8. Higher Level Metal Formation.<br />
+     Chemical Mechanical Polishing (CMP) is utilized by doping silicon oxide with Boron or Phosphorus to achieve surface planarization.This is followed up by TiN and Tungsten deposition.An aluminum (Al) layer is added and subjected to photolithography and CMP.This is the first interconnect and addditional interconnect layers can be added on top to reach higher level of metal layers.<br />
+     At the end a dielectric layer usually Si3N4 is added ontop to protect the chip.<br />
+     <img src="images/Lab15/15_3_10.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+</details>
+
+<details>
+<summary>Complete SPICE Deck for Inverter</summary>
+
+Here we go into the created spice file and make changes to it and simulate.<br />
+  In the spicefile the nmos and pmos model details were defined along with the sub circuit details and the other parasitic capacitance information also.<br />
+
+  We are going to be doing a transient analysis so we make the following changes to it.<br />
+  1. VGND to VSS 0V
+  2. Supply voltage VPWR to GND.
+  3. Sweeping a pulse input.
+  4. We add library files and change the scale to 0.01u
+  5. Add a transient analysis with nessasary stoptime and precision as shown below.
+
+<img src="images/Lab15/15_3_11.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+Following is the command to execute the Spice deck using the Ngspice software
+
+```
+ngspice spice_files/sky130_ayush_inv.spice
+```
+
+<img src="images/Lab15/15_3_12.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+Following commmand is to see the waveform for the transient analysis,
+
+```
+ngpsice spice_files/sky130_ayush_inv.spice
+```
+<img src="images/Lab15/15_3_13.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+#### Inverter Standard Cell Characterization
+
+There are four timing parameters used to characterize the inverter standard cell:
+1. Rise transition - Time taken for the output to rise from 20% to 80% of max value
+2. Fall Transition: Time taken for the output to fall from 80% to 20% of max value
+3. Cell Rise delay: difference in time(50% output rise) to time(50% input fall)
+4. Cell Fall delay: difference in time(50% output fall) to time(50% input rise) 
+<br />
+
+</details>
+
+<details>
+
+<summary> LAB exercise and DRC Challenges </summary>
+
+#### Introduction of Magic and Skywater DRC's
+
+Here the following are done:
+- In-depth overview of Magic DRC engine
+- Introduction to Google/Skywater DRC rules
+- Lab to warm up : Fixing a simple rule error
+- Lab of main excersise : Fixing or creating a complex error
+
+To know anything about magic use the following link:
+
+```
+http://opencircuitdesign.com/magic/
+```
+Majorly check out magic tutorails and magic command summary in the Using magic tab.<br />
+Also do check out the technlogy file manual in the technology files tab.<br />
+
+#### Sky130s pdk intro and Steps to download labs
+
+To view the documentation of Skywater pdks use the link below:
+
+```
+https://skywater-pdk.readthedocs.io/en/main/
+```
+
+We can view the rules associated with it there.<br />
+
+We are downloading the packaged files to our local pc using the **wget** command. It stands for Web get . The following command is used.<br />
+
+``` wget http://opencircuitdesign.com/open_pdks/archive/drc_tests.tgz ```
+
+After this, extract it using the below command.
+
+```
+ tar xfz drc_tests.tgz
+```
+Once it is done. A drc_test folder is created in the directory which extraction is done.<br />
+cd to that folder and run Magic.For better graphic use, the command below is used:
+
+```
+magic -d XR
+```
+To load a mag file we can load it using File > Open > .mag from the magic window .<br />
+
+<img src="images/Lab15/15_3_14.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+Or we can use the terminal comand:
+
+```
+magic -d XR <filename>.mag
+```
+
+Select a particular block to check the DRC check. using ```drc why``` .<br />
+We will use the following command in the tkcon window to see metal cut down.
+
+```
+cif see VIA2
+```
+<img src="images/Lab15/15_3_15.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+
+#### Load Sky130 tech rules for drc challenges 
+
+First load the poly file by ``load poly.mag`` on tkcon window.
+
+Finding the error by mouse cursor and find the box area, Poly.9 is violated due to spacing between polyres and poly.
+
+<img src="images/Lab15/15_3_16.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+We find that distance between regular polysilicon & poly resistor should be 22um but it is showing 17um and still no errors . We should go to sky130A.tech file and modify as follows to detect this error.
+
+![Screenshot from 2023-09-10 23-24-02](https://github.com/alwinshaju08/Physicaldesign_openlane/assets/69166205/0d199111-ded8-4193-a024-544227ab142c)
+
+
+In line
+
+```
+spacing npres *nsd 480 touching_illegal \
+	"poly.resistor spacing to N-tap < %d (poly.9)"
+```
+change to
+
+```
+spacing npres allpolynonres 480 touching_illegal \
+	"poly.resistor spacing to N-tap < %d (poly.9)"
+```
+Also,
+```
+spacing xhrpoly,uhrpoly,xpc alldiff 480 touching_illegal \
+
+	"xhrpoly/uhrpoly resistor spacing to diffusion < %d (poly.9)"
+```
+
+change to 
+
+```
+spacing xhrpoly,uhrpoly,xpc allpolynonres 480 touching_illegal \
+
+	"xhrpoly/uhrpoly resistor spacing to diffusion < %d (poly.9)"
+
+```
+<img src="images/Lab15/15_3_17.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+
+</details>

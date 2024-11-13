@@ -3660,9 +3660,198 @@ The routed .def file is used my Magic to generate the GDSII file
 
 <details>
 <summary>Execution of 'picorv32a' using OpenLane flow</summary>
+
+Follow the below commands to execute the OpenLane synthesis and floorplan flow,
+
+```
+docker
+./flow.tcl -interactive
+run_synthesis
+```
+
+OpenLane invokes the following
+
+- `Yosys` - RTL Synthesis and maps to yosys generic cells
+- `abc` - Technology mapping with the Skywater130 PDK. Here `sky130_fd_sc_hd` Skywater Foundry produced High density standard cells are used.
+- `OpenSTA` - This does the Static Timing Analysis on the netlist generated after synthesis and generated the timing reports 
+
+View the synthesis statistics
+
+<img src="images/Lab15/15_1_5.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+##### Key concepts
+
+###### Flops ratio 
+
+- The flop ratio is defined as the ratio of the number of flops to the total number of cells
+- Here flop ratio is **1613/14876 = 0.1084** (i.e: 10.84%) [From the synthesis statistics]
+
 </details>
 
-### Day-2
+### Day-2: Good floorplan vs. Bad floorplan and introduction to library cells
+
+<details>
+<summary>Chip Floor Planning Consideration</summary>
+  
+#### Utilisation Factor
+
+- The ratio of area occupied by the cells in the netlist to the total area of the core
+- Best practice is to set the utilisation factor less than 50% so that there will be space for optimisations, routing, inserting buffers etc.,
+
+#### Aspect Ratio
+
+- Aspect ratio is the ratio of height to the width of the die.
+- Aspect Ratio of 1 indicates that the die is a square die
+
+#### Floorplanning
+
+Floorplanning involves the following stages
+
+#### Pre-Placed cells
+
+- Whenever there is a complex logic which is repeated multiple times or a design given by a third-party it can be perceived as abstract black box with input and output ports, clocks etc ., 
+- These modules can be either macros or IP
+    - Macro  - It is a module such as CPU Core which are developed by the entity fabicating the chip
+    - IP - It is an "Intellectual Propertly" which the entity fabricating the chip gets as a package from a third party or even packaged Hard IPs developed by the same entity. Common examples of IPs are SRAM, PLL, Protocol Converters etc.,
+
+- These Macros and IPs are placed in the core at first before placing the standard cells  and power planning
+- These are optimally such that the cells which are more connected to each other are placed nearby and oriented for input and ouputs
+
+#### Decoupling Capacitors to the pre placed cells
+- The power lines can have some RLC component causing the voltage to drop at the node where it enters the Blocks or the ground of the cell can be at a higher potential than ideally 0V
+- When this happens, there is a chance such that the logic transitions are not to the upper or lower noise margins but to the forbidden state causing the circuit to misbehave
+- This is prevented by adding a capacitor in parallel with the power and ground node of the block such that the capacitor decouples the block from the power source whenever there is a logic transition
+
+#### Power Planning
+
+- When there are several cells or blocks drawing power from the same power rail and sinking power to the same ground pin the following effects are observed
+    - Whenever there is alogic transition from 1 to 0 in a large number of cells then there is a Voltage Droop in the power lines as Voltage Drops from Vdd
+    - Whener there is a logic transition from 0 to 1 in a large number of cells simultaneously causes the ground potential to raise above 0V calles as Ground Bump
+    - These effects pose a risk of driving the logic state out of the specified noise margin.
+    - To avoid this the Vdd and Gnd are placed as a grid of horizontal and vertical tracks and the cell nearer to an intersection can tap power or sink power to the Vdd or Gnd intersection respectively
+
+#### Pin Placement
+ - The input, output and Clock pins are placed optimally such that there is less complication in routing or optimised delay
+ - There are different styles of pin placement in openlane like `random pin placement` , `uniformly spaced` etc.,
+
+</details>
+
+<details>
+
+<summary>Floorplan run on OpenLANE & review layout in Magic</summary>
+
+**Floorplan envrionment variables or switches:**
+1. ```FP_CORE_UTIL``` - core utilization percentage
+2. ```FP_ASPECT_RATIO``` - the cores aspect ratio
+3. ```FP_CORE_MARGIN``` - The length of the margin surrounding the core area
+4. ```FP_IO_MODE``` - defines pin configurations around the core(1 = randomly equidistant/0 = not equidistant)
+5. ```FP_CORE_VMETAL``` - vertical metal layer where I/O pins are placed
+6. ```FP_CORE_HMETAL``` - horizontal metal layer where I/O pins are placed
+ 
+***Note: Usually, the parameter values for vertical metal layer and horizontal metal layer will be 1 more than that specified in the files***
+
+**Importance files in increasing priority order:**
+1. ```floorplan.tcl``` - System default settings
+2. ```config.tcl```
+3. ```sky130A_sky130_fd_sc_hd_config.tcl```
+ 
+ To run the picorv32a floorplan in openLANE:
+ 
+ ```
+ run_floorplan
+ 
+ ```
+
+Post the floorplan run, a .def file will have been created within the ```results/floorplan``` directory. We may review floorplan files by checking the ```floorplan.tcl.``` The system defaults will have been overriden by switches set in conifg.tcl and further overriden by switches set in ```sky130A_sky130_fd_sc_hd_config.tcl.```
+
+To view the floorplan, Magic is invoked after moving to the results/floorplan directory:
+
+
+```
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def
+
+```
+
+<img src="images/Lab15/15_1_3.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+One can zoom into Magic layout by selecting an area with left and right mouse click followed by pressing "z" key.
+
+Various components can be identified by using the what command in tkcon window after making a selection on the component.
+
+Zooming in also provides a view of decaps present in picorv32a chip.
+
+<img src="images/Lab15/15_1_4.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+The standard cell can be found at the bottom left corner.
+
+You can clearly see I/O pins, Decap cells and Tap cells. Tap cells are placed in a zig zag manner or you can say diagonally
+
+
+**Floorplaning DEF**
+
+<img src="images/Lab15/15_2_1.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+According to floorplan def 1000 Unit Distance = 1 micron Die width in unit distance
+
+= 660685 − 0
+
+= 660685 Die height in unit distance = 671405 − 0
+
+= 671405 Distance in microns
+
+= Value in unit distance / 1000 Die width in microns
+
+= 660685/1000 = 660.685 microns Die height in microns
+
+= 671405/1000 = 671.405 microns Are os die in microns
+
+= 660.685 ∗ 671.405 = 443587.212425 square microns
+  
+
+**Power Planing DEF**
+
+<img src="images/Lab15/15_2_2.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+#### Placement
+
+Placement in ASIC design is the step where standard cells (like logic gates and flip-flops) are positioned on the chip layout based on the floorplan. This stage directly affects the chip’s performance, timing, area, and power efficiency. Placement can be divided into two main stages: global placement and detailed placement.
+
+-> Congestion aware placement
+
+Congestion-aware placement refers to the process of positioning cells on the chip layout while considering potential routing congestion. The goal is to place cells in such a way that the interconnects (wires) connecting them can be routed efficiently, without excessive overlap or interference that could lead to design rule violations, signal delays, or even physical errors.
+
+-> Timing aware placement
+
+Timing-aware placement focuses on ensuring that the cells are placed in a way that optimizes the chip’s timing performance. The objective is to minimize the delay along critical signal paths (often referred to as critical paths) to meet the required timing constraints (setup and hold times).
+
+
+-> Command
+```ruby
+# Congestion aware placement by default
+run_placement
+```
+
+-> Opening the DEF file
+
+```ruby
+# path containing generated placement def
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/<your_path>/results/placement/
+
+# Command to load the placement def in magic tool
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def &
+```
+
+
+![placement](https://github.com/user-attachments/assets/0152dc05-807e-4113-9c96-f61b3c665af3)
+
+
+-> Legalized placement of standard cells
+
+we can see the power rails for standard cells as well as the legalized placed standard cells
+
+![standard_cell_grid_power](https://github.com/user-attachments/assets/78a1ffbc-beaa-4246-97aa-9d0fa74fe80a)
+
+</details>
 
 
 ### Day-3
@@ -3894,3 +4083,6 @@ spacing xhrpoly,uhrpoly,xpc allpolynonres 480 touching_illegal \
 
 
 </details>
+
+### Day-4
+

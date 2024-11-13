@@ -4084,5 +4084,61 @@ spacing xhrpoly,uhrpoly,xpc allpolynonres 480 touching_illegal \
 
 </details>
 
-### Day-4
+### Day-4 : Pre-layout timing analysis and importance of good clock tree
+
+<details>
+<summary>Timing modelling using delay tables</summary>
+
+#### Grid into track info
+
+Track is a path on which metal layers are drawn for routing.It is used to define the height of the standard cell.
+
+Guidelines to be followed while making a standard cell:
+1. Input and output ports must lie on the intersection on Horizontal annd vertical tracks.
+2. Width of standard cell must be in the odd multiple of track pitch & Height in the odd multiple of track height pitch.
+
+The information to get the grids is defined in ```tracks.info```.
+cd to the particular location and open the file.<br />
+
+```
+cd Desktop/work/tools/openlane_working_dir/pdks/open_pdks/sky130/openlane/sky130_fd_sc_hd/tracks.info
+```
+The content of the file are:
+
+```
+li1 X 0.23 0.46  //0.46um is the width  
+li1 Y 0.17 0.34  //0.34um is the height 
+met1 X 0.17 0.34
+met1 Y 0.17 0.34
+met2 X 0.23 0.46
+met2 Y 0.23 0.46
+met3 X 0.34 0.68
+met3 Y 0.34 0.68
+met4 X 0.46 0.92
+met4 Y 0.46 0.92
+met5 X 1.70 3.40
+met5 Y 1.70 3.40
+```
+
+<img src="images/Lab15/15_4_1.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+We input the below command in the tkcon window to get grid on magic.<br>
+
+```
+grid 0.46um 0.34um 0.23um 0.17um
+```
+
+<img src="images/Lab15/15_4_2.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+#### Conversion of magic layout to standard cell LEF file
+
+Extraction of the LEF file for the cell comes next when the layout is completed. To help the placer and router tool, specific characteristics and definitions must be defined for the cell's pins. Ports are the macro's declared PINs, and in LEF files, a cell containing ports is written as a macro cell. Our goal is to extract LEF in a predetermined format from a configuration (in this case, a straightforward CMOS inverter). The first step is to define each port and assign the appropriate class and use characteristics to each port.
+
+Below are steps to define a port :
+
+First, open the.mag file for the design in the Magic Layout window. Next, select Edit >> Text to bring up a dialogue window. Use locali for port y & a, use metal 1 for vdd & gnd as shown in figures below.
+
+
+
+</details>
 

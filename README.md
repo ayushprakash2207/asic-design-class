@@ -3667,6 +3667,9 @@ The routed .def file is used my Magic to generate the GDSII file
 
 ### Day-3
 
+<details>
+
+<summary> Introduction to VSD Inverter and Layout Visualization using Magic Tool </summary>
 
 Following are the steps to clone the VSD Std. Cell Design Repo and view the layout of the inverter using magic tool,
 
@@ -3694,6 +3697,8 @@ ext2spice
 Below screenshot shows the extracted spice parameters,
 
 <img src="images/Lab15/15_3_2.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+</details>
 
 
 <details>

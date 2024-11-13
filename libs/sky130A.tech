@@ -2823,6 +2823,8 @@ drc
  spacing allpoly allpoly 210 touching_ok "Poly spacing < %d (Poly 2)"
  spacing allpolynonfet alldifflvnonfet 75 corner_ok allfets \
 	"Poly spacing to Diffusion < %d (Poly 4a)"
+ spacing npres *nsd 480 touching_illegal \
+	"Poly resistor spacing to N-tap < %d (Poly 9)"
  spacing npres allpolynonres 480 touching_illegal \
 	"poly.resistor spacing to N-tap < %d (poly.9)"
  overhang *ndiff,rndiff nfet,scnfet 250 "N-Diffusion overhang of nmos < %d (Poly 7)"
@@ -3176,6 +3178,9 @@ variants *
 #--------------------------------------------------
 
   width uhrpoly 350 "uhrpoly resistor width < %d"
+  spacing xhrpoly,uhrpoly,xpc alldiff 480 touching_illegal \
+	"xhrpoly/uhrpoly resistor spacing to diffusion < %d (Poly 9)"
+  
   spacing xhrpoly,uhrpoly,xpc allpolynonres 480 touching_illegal \
 	"xhrpoly/uhrpoly resistor spacing to diffusion < %d (poly.9)"
 

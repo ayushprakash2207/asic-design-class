@@ -4138,7 +4138,260 @@ Below are steps to define a port :
 
 First, open the.mag file for the design in the Magic Layout window. Next, select Edit >> Text to bring up a dialogue window. Use locali for port y & a, use metal 1 for vdd & gnd as shown in figures below.
 
+<img src="images/Lab15/15_4_3.png" alt="ASIC_Design_Flow" width="800"/><br>
 
+<img src="images/Lab15/15_4_4.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+<img src="images/Lab15/15_4_5.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+<img src="images/Lab15/15_4_6.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+Define the purpose of ports as follows in tkcon window:
+
+```
+port A class input
+port A use signal
+
+port Y class output
+port Y use signal
+
+port VPWR class inout
+port VPWR use power
+
+port VGND class inout
+port VPWR use ground
+```
+
+Generate lef file using following command
+
+```
+lef write <name>
+```
+
+This generates sky130_ayush_inv.lef file.
+
+#### Steps to include custom cell in ASIC design
+
+We have created a custom standard cell in previous steps of an inverter. Copy lef file, sky130_fd_sc_hd_typical.lib, sky130_fd_sc_hd_slow.lib & sky130_fd_sc_hd_fast.lib to src folder of picorv32a from libs folder vsdstdcelldesign.
+
+Then modify the condif.tcl as follows.
+
+```
+
+# Design
+set ::env(DESIGN_NAME) "picorv32a"
+
+set ::env(VERILOG_FILES) "$::env(DESIGN_DIR)/src/picorv32a.v"
+
+set ::env(CLOCK_PORT) "clk"
+set ::env(CLOCK_NET) $::env(CLOCK_PORT)
+
+set ::env(GLB_RESIZER_TIMING_OPTIMIZATIONS) {1}
+
+set ::env(LIB_SYNTH) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
+set ::env(LIB_SLOWEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__slow.lib"
+set ::env(LIB_FASTEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__fast.lib"
+set ::env(LIB_TYPICAL) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
+
+set ::env(EXTRA_LEFS) [glob $::env(OPENLANE_ROOT)/designs/$::env(DESIGN_NAME)/src/*.lef]
+
+set filename $::env(DESIGN_DIR)/$::env(PDK)_$::env(STD_CELL_LIBRARY)_config.tcl
+if { [file exists $filename] == 1} {
+	source $filename
+}
+```
+
+To integrate standard cell in openlane flow, perform following commands:
+
+```
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+```
+
+#### Run openlane flow synthesis with newly inserted custom inverter cell
+
+```
+docker
+# Now that we have entered the OpenLANE flow contained docker sub-system we can invoke the OpenLANE flow in the Interactive mode using the following command
+./flow.tcl -interactive
+
+# Now that OpenLANE flow is open we have to input the required packages for proper functionality of the OpenLANE flow
+package require openlane 0.9
+
+# Now the OpenLANE flow is ready to run any design and initially we have to prep the design creating some necessary files and directories for running a specific design which in our case is 'picorv32a'
+prep -design picorv32a
+
+# Adiitional commands to include newly added lef to openlane flow
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+
+# Now that the design is prepped and ready, we can run synthesis using following command
+run_synthesis
+```
+
+<img src="images/Lab15/15_4_7.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+<img src="images/Lab15/15_4_8.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+#### Remove/reduce the newly introduced violations with the introduction of custom inverter cell by modifying design parameters
+
+Commands to view and change parameters to improve timing and run synthesis
+
+```
+# Now once again we have to prep design so as to update variables
+prep -design picorv32a -tag 13-11_20-03 -overwrite
+
+# Addiitional commands to include newly added lef to openlane flow merged.lef
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+
+# Command to display current value of variable SYNTH_STRATEGY
+echo $::env(SYNTH_STRATEGY)
+
+# Command to set new value for SYNTH_STRATEGY
+set ::env(SYNTH_STRATEGY) "DELAY 3"
+
+# Command to display current value of variable SYNTH_BUFFERING to check whether it's enabled
+echo $::env(SYNTH_BUFFERING)
+
+# Command to display current value of variable SYNTH_SIZING
+echo $::env(SYNTH_SIZING)
+
+# Command to set new value for SYNTH_SIZING
+set ::env(SYNTH_SIZING) 1
+
+# Command to display current value of variable SYNTH_DRIVING_CELL to check whether it's the proper cell or not
+echo $::env(SYNTH_DRIVING_CELL)
+
+# Now that the design is prepped and ready, we can run synthesis using following command
+run_synthesis
+```
+
+<img src="images/Lab15/15_4_9.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+#### Run floorplan and placement and verify the cell is accepted in PnR flow
+
+Now that our custom inverter is properly accepted in synthesis we can now run floorplan using following command
+
+```
+run_floorplan
+```
+
+<img src="images/Lab15/15_4_10.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+Facing errors above, so need to run floorplan commands individually
+
+```
+# Follwing commands are alltogather sourced in "run_floorplan" command
+init_floorplan
+place_io
+tap_decap_or
+```
+
+<img src="images/Lab15/15_4_11.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+<img src="images/Lab15/15_4_12.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+Post floorplan, we need to execute the below command for placement
+
+```
+run_placement
+```
+
+<img src="images/Lab15/15_4_13.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+Commands to load placement def in magic in another terminal
+
+```
+# Change directory to path containing generated placement def
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/13-11_20-03/results/placement/
+
+# Command to load the placement def in magic tool
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def &
+```
+<img src="images/Lab15/15_4_14.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+<img src="images/Lab15/15_4_15.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+Command for tkcon window to view internal layers of cells
+
+```
+expand
+```
+
+<img src="images/Lab15/15_4_16.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+</details>
+
+<details>
+<summary>Post-Synthesis timing analysis with OpenSTA tool</summary>
+
+Since we are having 0 wns after improved timing run we are going to do timing analysis on initial run of synthesis which has lots of violations and no parameters were added to improve timing
+
+Commands to invoke the OpenLANE flow include new lef and perform synthesis
+
+```
+cd Desktop/work/tools/openlane_working_dir/openlane
+docker
+
+./flow.tcl -interactive
+
+package require openlane 0.9
+
+prep -design picorv32a
+
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+
+set ::env(SYNTH_SIZING) 1
+
+run_synthesis
+```
+
+<img src="images/Lab15/15_4_17.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+Let's create .conf file for STA analysis,
+
+<img src="images/Lab15/15_4_18.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+my_base.sdc
+
+<img src="images/Lab15/15_4_19.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+Commands to run STA in another terminal
+
+```
+cd Desktop/work/tools/openlane_working_dir/openlane
+sta pre_sta.conf
+```
+<img src="images/Lab15/15_4_20.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+<img src="images/Lab15/15_4_21.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+Since more fanout is causing more delay we can add parameter to reduce fanout and do synthesis again
+
+Commands to include new lef and perform synthesis
+
+```
+# Now the OpenLANE flow is ready to run any design and initially we have to prep the design creating some necessary files and directories for running a specific design which in our case is 'picorv32a'
+prep -design picorv32a -tag 13-11_20-55 -overwrite
+
+# Adiitional commands to include newly added lef to openlane flow
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+
+# Command to set new value for SYNTH_SIZING
+set ::env(SYNTH_SIZING) 1
+
+# Command to set new value for SYNTH_MAX_FANOUT
+set ::env(SYNTH_MAX_FANOUT) 4
+
+# Command to display current value of variable SYNTH_DRIVING_CELL to check whether it's the proper cell or not
+echo $::env(SYNTH_DRIVING_CELL)
+
+# Now that the design is prepped and ready, we can run synthesis using following command
+run_synthesis
+```
 
 </details>
 

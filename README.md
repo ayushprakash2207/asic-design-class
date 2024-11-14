@@ -3665,6 +3665,8 @@ Follow the below commands to execute the OpenLane synthesis and floorplan flow,
 
 ```
 docker
+package require openlane 0.9
+prep -design picorv32a
 ./flow.tcl -interactive
 run_synthesis
 ```
@@ -3960,7 +3962,7 @@ ngspice spice_files/sky130_ayush_inv.spice
 Following commmand is to see the waveform for the transient analysis,
 
 ```
-ngpsice spice_files/sky130_ayush_inv.spice
+plot y vs time a
 ```
 <img src="images/Lab15/15_3_13.png" alt="ASIC_Design_Flow" width="800"/><br>
 
@@ -3972,6 +3974,63 @@ There are four timing parameters used to characterize the inverter standard cell
 3. Cell Rise delay: difference in time(50% output rise) to time(50% input fall)
 4. Cell Fall delay: difference in time(50% output fall) to time(50% input rise) 
 <br />
+
+-> Rising Transition
+
+-> 20% rising output
+
+<img src="images/Lab15/15_4_44.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+-> 80% rising output
+
+<img src="images/Lab15/15_4_45.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+```
+Rise Transistion = 2.24 - 2.18 = 0.065ns
+```
+
+-> Falling Transition
+
+-> 20% falling output
+
+<img src="images/Lab15/15_4_46.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+-> 80% falling output
+
+<img src="images/Lab15/15_4_47.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+```
+Fall Transistion = 4.09 - 4.05 = 0.04 ns 
+```
+
+-> Cell Rise Delay
+
+-> 50% from input falling
+
+<img src="images/Lab15/15_4_48.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+-> 50% from output rising
+
+<img src="images/Lab15/15_4_49.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+```
+Rising delay =  2.21 - 2.15 = 0.06 ns
+```
+
+-> Cell Fall Delay
+
+-> 50% from input rising
+
+<img src="images/Lab15/15_4_50.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+-> 50% from output falling
+
+<img src="images/Lab15/15_4_51.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+```
+Falling delay =  4.08 - 4.05 = 0.03 ns
+```
+
 
 </details>
 
@@ -4174,7 +4233,7 @@ This generates sky130_ayush_inv.lef file.
 
 We have created a custom standard cell in previous steps of an inverter. Copy lef file, sky130_fd_sc_hd_typical.lib, sky130_fd_sc_hd_slow.lib & sky130_fd_sc_hd_fast.lib to src folder of picorv32a from libs folder vsdstdcelldesign.
 
-Then modify the condif.tcl as follows.
+Then modify the conf.tcl as follows.
 
 ```
 

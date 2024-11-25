@@ -24,6 +24,7 @@
 14. [Static Timing Analysis for Synthesized VSDBabySoC using OpenSTA](#Lab13)
 15. [PVT Corner Analysis for Synthesized VSDBabySoC using OpenSTA](#Lab14)
 16. [Advanced Physical Design using OpenLane](#Lab15)
+17. [RTL to GDSII flow for the RVMYTH RISC-V core and VSDBabySoC](#Lab16)
 
 ---
 <a name="Lab1A"></a>
@@ -3336,8 +3337,9 @@ We can conclude that the timing constraints are not met for our design by observ
 
 <a name="Lab14"></a>
 
+<details>
 
-## Lab 14: PVT Corner Analysis for Synthesized VSDBabySoC using OpenSTA
+<summary> Lab 14: PVT Corner Analysis for Synthesized VSDBabySoC using OpenSTA </summary>
 
 Below are the contents of the constraint file,
 
@@ -3562,12 +3564,17 @@ Following graph shows the worst negative slack measured for different library fi
 
 <img src="images/Lab14/WNS.png" alt="DFF_Async_Reset" width="800"/><br>
 
+
+</details>
+
 ---
 
 <a name="Lab15"></a>
 
+<details>
 
-## Lab 15: Advanced Physical Design using OpenLane
+
+<summary> Lab 15: Advanced Physical Design using OpenLane </summary>
 
 ### Day-1
 
@@ -4830,5 +4837,46 @@ exit
 
 </details>
 
-
+</details>
 ---
+
+<a name="Lab16"></a>
+
+## Lab 16: RTL to GDSII flow for the RVMYTH RISC-V core and VSDBabySoC
+
+### Installation of the OpenRoad Flow Scripts
+
+Follow the below link to install the ORFS with the necessary tools locally,
+
+```https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts/blob/master/docs/user/BuildLocally.md```
+
+Follow the below commands to install the ORFS,
+
+```
+git clone --recursive https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts
+cd OpenROAD-flow-scripts
+sudo ./setup.sh
+./build_openroad.sh --local
+```
+
+To verify the installation, use the following commands,
+
+```
+source ./env.sh
+yosys -help
+openroad -help
+cd flow
+make
+```
+
+The above command checks the installation of yosys and openroad. The last command executes the flow for gcd design for nangate45 pdk,
+
+<img src="images/Lab16/install/16_1_1.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+To verify the flow run, run the following command
+
+```
+make gui_final
+```
+
+<img src="images/Lab16/install/16_1_2.png" alt="ASIC_Design_Flow" width="800"/><br>

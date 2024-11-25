@@ -5661,4 +5661,10 @@ Fanout     Cap    Slew   Delay    Time   Description
 
 [Here](src/odb) is the link for the database (**odb**) files for both rvmyth and vsdbabysoc.
 
+Heatmaps for RISC-V core and BabySoC
+
+<img src="images/Lab16/rvmyth/16_2_18.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+<img src="images/Lab16/babysoc/16_3_16.png" alt="ASIC_Design_Flow" width="800"/><br>
+
 ----

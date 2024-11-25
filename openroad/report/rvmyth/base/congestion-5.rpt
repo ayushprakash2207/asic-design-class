@@ -1,0 +1,60 @@
+violation type: Horizontal congestion
+	srcs: net:CPU_dmem_wr_data_a4\[2\] net:_01277_ net:_01323_ net:_01463_ net:_01618_ net:_01632_ net:_01685_ net:_01686_ net:_01706_ net:_01772_ net:_01780_ net:_01781_ net:_02072_ net:_02238_ net:_02390_ net:_02391_ net:net72 net:net53 net:net789 net:net947 net:net1135 net:net1188
+	comment: capacity:21 usage:22 overflow:1
+	bbox = (75.9000, 89.7000) - (82.8000, 96.6000) on Layer -
+violation type: Horizontal congestion
+	srcs: net:_01178_ net:_01382_ net:_01479_ net:_01706_ net:_02201_ net:_02202_ net:_02234_ net:_02397_ net:_02462_ net:_02463_ net:net253 net:clknet_4_0_0_clk net:clknet_leaf_111_clk net:net74 net:net623 net:net663 net:net773 net:net1042 net:net1112 net:net1202
+	comment: capacity:19 usage:20 overflow:1
+	bbox = (89.7000, 48.3000) - (96.6000, 55.2000) on Layer -
+violation type: Horizontal congestion
+	srcs: net:CPU_dmem_wr_data_a4\[3\] net:_01309_ net:net437 net:_01355_ net:_01375_ net:_01381_ net:_01384_ net:_01469_ net:_01470_ net:_01536_ net:_01583_ net:_01587_ net:_01626_ net:_01660_ net:_01661_ net:_01701_ net:_01702_ net:_01736_ net:_01778_ net:_01914_ net:_01922_ net:_02155_ net:_02158_ net:_02355_ net:net1014 net:net1241
+	comment: capacity:25 usage:26 overflow:1
+	bbox = (96.6000, 13.8000) - (103.5000, 20.7000) on Layer -
+violation type: Horizontal congestion
+	srcs: net:_00025_ net:_00217_ net:_00218_ net:_01289_ net:_01308_ net:_01354_ net:_01769_ net:_01770_ net:_01771_ net:_01921_ net:net342 net:clknet_leaf_106_clk net:net98 net:net43 net:_05447_ net:net576 net:net742 net:net746 net:net1040 net:net1115 net:net1276 net:net1289
+	comment: capacity:21 usage:22 overflow:1
+	bbox = (96.6000, 41.4000) - (103.5000, 48.3000) on Layer -
+violation type: Horizontal congestion
+	srcs: net:_01428_ net:_01505_ net:_01506_ net:_01531_ net:_01548_ net:_01549_ net:_01624_ net:_01625_ net:_01704_ net:_01812_ net:_01816_ net:_01837_ net:_01844_ net:_01845_ net:_01920_ net:_01924_ net:_01931_ net:_01967_ net:_02009_ net:_02010_ net:_02089_ net:_02123_ net:_02124_ net:_02279_ net:net76 net:net63 net:net724 net:net867
+	comment: capacity:25 usage:28 overflow:3
+	bbox = (103.5000, 0.0000) - (110.4000, 6.9000) on Layer -
+violation type: Horizontal congestion
+	srcs: net:_01350_ net:_01351_ net:_01376_ net:_01383_ net:_01385_ net:_01392_ net:_01427_ net:_01530_ net:_01737_ net:_01838_ net:_01847_ net:_01966_ net:_01999_ net:_02038_ net:_02046_ net:_02052_ net:_02159_ net:_02320_ net:_02396_ net:net225 net:net562 net:net568 net:net851 net:net969 net:net971 net:net1008 net:net1048 net:net1167
+	comment: capacity:25 usage:28 overflow:3
+	bbox = (103.5000, 6.9000) - (110.4000, 13.8000) on Layer -
+violation type: Horizontal congestion
+	srcs: net:CPU_dmem_wr_data_a4\[3\] net:_01309_ net:_01355_ net:_01375_ net:_01381_ net:_01384_ net:_01469_ net:_01470_ net:_01536_ net:_01583_ net:_01587_ net:_01626_ net:_01660_ net:_01661_ net:_01701_ net:_01702_ net:_01736_ net:_01778_ net:_01914_ net:_01922_ net:_02051_ net:_02088_ net:_02155_ net:_02158_ net:_02355_ net:net1014 net:net1241
+	comment: capacity:25 usage:27 overflow:2
+	bbox = (103.5000, 13.8000) - (110.4000, 20.7000) on Layer -
+violation type: Horizontal congestion
+	srcs: net:_00346_ net:net523 net:net522 net:net457 net:_01813_ net:_01817_ net:_01854_ net:_01855_ net:_01923_ net:_02000_ net:_02001_ net:_02002_ net:_02020_ net:_02080_ net:_02081_ net:_02165_ net:_02166_ net:net738 net:net1229
+	comment: capacity:18 usage:19 overflow:1
+	bbox = (103.5000, 20.7000) - (110.4000, 27.6000) on Layer -
+violation type: Horizontal congestion
+	srcs: net:CPU_Dmem_value_a5\[5\]\[4\] net:CPU_dmem_wr_data_a4\[17\] net:CPU_dmem_wr_data_a4\[8\] net:_00378_ net:net437 net:_01614_ net:_01615_ net:_01779_ net:_01930_ net:_01970_ net:_02047_ net:_02156_ net:net311 net:_02321_ net:net267 net:clknet_leaf_107_clk net:net56 net:net53 net:net695 net:net739 net:net785 net:net811 net:net849
+	comment: capacity:21 usage:23 overflow:2
+	bbox = (103.5000, 27.6000) - (110.4000, 34.5000) on Layer -
+violation type: Horizontal congestion
+	srcs: net:_01537_ net:_01706_ net:_01888_ net:_01889_ net:_02078_ net:_02079_ net:_02157_ net:_02233_ net:_02243_ net:_02244_ net:_02430_ net:net211 net:net52 net:_05445_ net:_05456_ net:net799 net:net945 net:net1057 net:net1105
+	comment: capacity:18 usage:19 overflow:1
+	bbox = (103.5000, 34.5000) - (110.4000, 41.4000) on Layer -
+violation type: Horizontal congestion
+	srcs: net:CPU_dmem_wr_data_a4\[21\] net:_00409_ net:_01308_ net:_01354_ net:_01664_ net:_01921_ net:_01992_ net:net343 net:net342 net:_02128_ net:_02359_ net:_02397_ net:clknet_leaf_106_clk net:net74 net:net43 net:net664 net:net742 net:net746 net:net1040 net:net1276 net:net1289
+	comment: capacity:20 usage:21 overflow:1
+	bbox = (103.5000, 41.4000) - (110.4000, 48.3000) on Layer -
+violation type: Horizontal congestion
+	srcs: net:CPU_Dmem_value_a5\[4\]\[4\] net:CPU_dmem_wr_data_a4\[17\] net:_00377_ net:net437 net:_01427_ net:_01779_ net:_01930_ net:_01970_ net:_02047_ net:_02156_ net:net311 net:_02321_ net:net267 net:net56 net:net53 net:net52 net:_05455_ net:net695 net:net785 net:net800 net:net811 net:net849
+	comment: capacity:21 usage:22 overflow:1
+	bbox = (110.4000, 27.6000) - (117.3000, 34.5000) on Layer -
+violation type: Vertical congestion
+	srcs: net:CPU_Dmem_value_a5\[11\]\[4\] net:CPU_dmem_rd_data_a5\[3\] net:CPU_dmem_wr_data_a4\[21\] net:_01292_ net:_01453_ net:_01461_ net:_01553_ net:_01554_ net:_01627_ net:_01705_ net:_02149_ net:clknet_4_0_0_clk net:net48 net:net752 net:net773 net:net919
+	comment: capacity:15 usage:16 overflow:1
+	bbox = (96.6000, 62.1000) - (103.5000, 69.0000) on Layer -
+violation type: Vertical congestion
+	srcs: net:CPU_Dmem_value_a5\[11\]\[0\] net:CPU_src2_value_a3\[3\] net:_01296_ net:_01397_ net:_01705_ net:_02094_ net:_02096_ net:net329 net:clknet_leaf_4_clk net:net55 net:net44 net:_05166_ net:_05169_ net:_05484_ net:net1296 net:net1337 net:net1388
+	comment: capacity:16 usage:17 overflow:1
+	bbox = (103.5000, 117.3000) - (110.4000, 124.2000) on Layer -
+violation type: Vertical congestion
+	srcs: net:CPU_Dmem_value_a5\[2\]\[0\] net:CPU_dmem_rd_data_a5\[1\] net:CPU_dmem_wr_data_a4\[2\] net:_01174_ net:_01474_ net:_01478_ net:_01913_ net:_02086_ net:_02328_ net:net83 net:net65 net:_05152_ net:_05166_ net:w_CPU_dmem_rd_data_a4\[5\] net:net1024 net:net1888
+	comment: capacity:15 usage:16 overflow:1
+	bbox = (110.4000, 124.2000) - (117.3000, 131.1000) on Layer -

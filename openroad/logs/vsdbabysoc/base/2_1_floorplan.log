@@ -1,0 +1,43 @@
+OpenROAD v2.0-17013-gf7f634f88 
+Features included (+) or not (-): +Charts +GPU +GUI +Python
+This program is licensed under the BSD-3 license. See the LICENSE file for details.
+Components of this program may be licensed under more restrictive licenses which must be honored.
+[INFO ORD-0030] Using 16 thread(s).
+[INFO ODB-0227] LEF file: /home/ayush/OpenRoad/flow/platforms/sky130hd/lef/sky130_fd_sc_hd.tlef, created 13 layers, 25 vias
+[INFO ODB-0227] LEF file: /home/ayush/OpenRoad/flow/platforms/sky130hd/lef/sky130_fd_sc_hd_merged.lef, created 441 library cells
+[WARNING ODB-0220] WARNING (LEFPARS-2008): NOWIREEXTENSIONATPIN statement is obsolete in version 5.6 or later.
+The NOWIREEXTENSIONATPIN statement will be ignored. See file /home/ayush/OpenRoad/flow/designs/src/vsdbabysoc/lef/avsddac.lef at line 2.
+
+[INFO ODB-0227] LEF file: /home/ayush/OpenRoad/flow/designs/src/vsdbabysoc/lef/avsddac.lef, created 1 library cells
+[WARNING ODB-0220] WARNING (LEFPARS-2008): NOWIREEXTENSIONATPIN statement is obsolete in version 5.6 or later.
+The NOWIREEXTENSIONATPIN statement will be ignored. See file /home/ayush/OpenRoad/flow/designs/src/vsdbabysoc/lef/avsdpll.lef at line 2.
+
+[WARNING ODB-0186] macro avsdpll references unknown site unithddb1
+[INFO ODB-0227] LEF file: /home/ayush/OpenRoad/flow/designs/src/vsdbabysoc/lef/avsdpll.lef, created 1 library cells
+Master sky130_ef_sc_hd__decap_12 is loaded but not used in the design
+
+==========================================================================
+Floorplan check_setup
+--------------------------------------------------------------------------
+Warning: There are 6 input ports missing set_input_delay.
+Warning: There is 1 output port missing set_output_delay.
+Warning: There are 5 unconstrained endpoints.
+number instances in verilog is 7077
+[WARNING IFP-0028] Core area lower left (20.000, 20.000) snapped to (20.240, 21.760).
+[INFO IFP-0001] Added 576 rows of 3412 site unithd.
+[INFO RSZ-0026] Removed 662 buffers.
+Default units for flow
+ time 1ns
+ capacitance 1pF
+ resistance 1kohm
+ voltage 1v
+ current 1mA
+ power 1nW
+ distance 1um
+Report metrics stage 2, floorplan final...
+
+==========================================================================
+floorplan final report_design_area
+--------------------------------------------------------------------------
+Design area 716329 u^2 29% utilization.
+Elapsed time: 0:01.46[h:]min:sec. CPU time: user 1.37 sys 0.04 (96%). Peak memory: 164028KB.

@@ -1,0 +1,39 @@
+OpenROAD v2.0-17013-gf7f634f88 
+Features included (+) or not (-): +Charts +GPU +GUI +Python
+This program is licensed under the BSD-3 license. See the LICENSE file for details.
+Components of this program may be licensed under more restrictive licenses which must be honored.
+[INFO ORD-0030] Using 16 thread(s).
+[INFO ODB-0227] LEF file: /home/ayush/OpenRoad/flow/platforms/sky130hd/lef/sky130_fd_sc_hd.tlef, created 13 layers, 25 vias
+[INFO ODB-0227] LEF file: /home/ayush/OpenRoad/flow/platforms/sky130hd/lef/sky130_fd_sc_hd_merged.lef, created 441 library cells
+[WARNING STA-0366] port 'ENb_CP' not found.
+[WARNING STA-0366] port 'ENb_VCO' not found.
+[WARNING STA-0366] port 'REF' not found.
+[WARNING STA-0366] port 'VCO_IN' not found.
+[WARNING STA-0366] port 'VREFH' not found.
+Master sky130_ef_sc_hd__decap_12 is loaded but not used in the design
+
+==========================================================================
+Floorplan check_setup
+--------------------------------------------------------------------------
+Warning: There is 1 input port missing set_input_delay.
+Warning: There are 10 output ports missing set_output_delay.
+Warning: There are 14 unconstrained endpoints.
+number instances in verilog is 7095
+[WARNING IFP-0028] Core area lower left (20.000, 20.000) snapped to (20.240, 21.760).
+[INFO IFP-0001] Added 208 rows of 1238 site unithd.
+[INFO RSZ-0026] Removed 676 buffers.
+Default units for flow
+ time 1ns
+ capacitance 1pF
+ resistance 1kohm
+ voltage 1v
+ current 1mA
+ power 1nW
+ distance 1um
+Report metrics stage 2, floorplan final...
+
+==========================================================================
+floorplan final report_design_area
+--------------------------------------------------------------------------
+Design area 54730 u^2 17% utilization.
+Elapsed time: 0:01.07[h:]min:sec. CPU time: user 1.03 sys 0.04 (100%). Peak memory: 159356KB.

@@ -1,0 +1,18 @@
+[INFO] synth__design__instance__area__stdcell pass test: 57322.4768 <= 65920.85
+[INFO] constraints__clocks__count pass test: 1.0 == 1.0
+[INFO] placeopt__design__instance__area pass test: 67651.1 <= 77799.0
+[INFO] placeopt__design__instance__count__stdcell pass test: 10836.0 <= 12461.0
+[INFO] detailedplace__design__violations pass test: 0.0 == 0.0
+[INFO] cts__design__instance__count__setup_buffer pass test: 0.0 <= 846.0
+[INFO] cts__design__instance__count__hold_buffer pass test: 1859.0 <= 2045.0
+[INFO] globalroute__antenna_diodes_count pass test: 8.0 <= 9.0
+[INFO] detailedroute__route__wirelength pass test: 281275.0 <= 323466.0
+[INFO] detailedroute__route__drc_errors pass test: 0.0 <= 0.0
+[INFO] detailedroute__antenna__violating__nets pass test: 0.0 <= 0.0
+[INFO] detailedroute__antenna_diodes_count pass test: 1.0 <= 5.0
+[INFO] finish__timing__setup__ws pass test: 5.2241 >= 0.0
+[INFO] finish__design__instance__area pass test: 90892.2 <= 104526.0
+[INFO] finish__timing__drv__setup_violation_count pass test: 0.0 <= 423.0
+[INFO] finish__timing__drv__hold_violation_count pass test: 18.0 <= 100.0
+[INFO] finish__timing__wns_percent_delay pass test: 98.343405 >= -10.0
+All metadata rules passed (17 rules)

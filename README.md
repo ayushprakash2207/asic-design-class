@@ -5667,4 +5667,6 @@ Heatmaps for RISC-V core and BabySoC
 
 <img src="images/Lab16/babysoc/16_3_16.png" alt="ASIC_Design_Flow" width="800"/><br>
 
+**Note:** All results, reports and logs for ORFS have been added [here](openroad/)
+
 ----

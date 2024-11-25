@@ -1,0 +1,3 @@
+violation type: Metal Spacing
+	srcs: net:net34
+	bbox = (675.2950, 1121.7600) - (675.3500, 1121.9600) on Layer met1

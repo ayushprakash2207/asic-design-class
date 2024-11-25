@@ -1,0 +1,28 @@
+OpenROAD v2.0-17013-gf7f634f88 
+Features included (+) or not (-): +Charts +GPU +GUI +Python
+This program is licensed under the BSD-3 license. See the LICENSE file for details.
+Components of this program may be licensed under more restrictive licenses which must be honored.
+[INFO ORD-0030] Using 16 thread(s).
+Perform port buffering...
+[INFO RSZ-0027] Inserted 1 input buffers.
+[INFO RSZ-0028] Inserted 10 output buffers.
+Perform buffer insertion and gate resizing...
+repair_design 
+[INFO RSZ-0058] Using max wire length 2154um.
+[INFO RSZ-0034] Found 524 slew violations.
+[INFO RSZ-0036] Found 40 capacitance violations.
+[INFO RSZ-0038] Inserted 99 buffers in 524 nets.
+[INFO RSZ-0039] Resized 747 instances.
+Repair tie lo fanout...
+[INFO RSZ-0042] Inserted 3 tie sky130_fd_sc_hd__conb_1 instances.
+Repair tie hi fanout...
+Floating nets: 
+Report metrics stage 3, resizer...
+
+==========================================================================
+resizer report_design_area
+--------------------------------------------------------------------------
+Design area 67651 u^2 21% utilization.
+Instance count before 10724, after 10836
+Pin count before 23868, after 24092
+Elapsed time: 0:02.33[h:]min:sec. CPU time: user 2.12 sys 0.21 (100%). Peak memory: 646704KB.

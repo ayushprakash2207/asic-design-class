@@ -1,0 +1,16 @@
+OpenROAD v2.0-17013-gf7f634f88 
+Features included (+) or not (-): +Charts +GPU +GUI +Python
+This program is licensed under the BSD-3 license. See the LICENSE file for details.
+Components of this program may be licensed under more restrictive licenses which must be honored.
+[INFO ORD-0030] Using 16 thread(s).
+place_pins -hor_layers met3 -ver_layers met2 -exclude left:0-600 -exclude left:1000-1600: -exclude right:* -exclude top:* -exclude bottom:*
+Found 2 macro blocks.
+Using 2 tracks default min distance between IO pins.
+[INFO PPL-0001] Number of slots           5828
+[INFO PPL-0002] Number of I/O             7
+[INFO PPL-0003] Number of I/O w/sink      7
+[INFO PPL-0004] Number of I/O w/o sink    0
+[INFO PPL-0005] Slots per section         200
+[INFO PPL-0008] Successfully assigned pins to sections.
+[INFO PPL-0012] I/O nets HPWL: 4906.47 um.
+Elapsed time: 0:00.39[h:]min:sec. CPU time: user 0.34 sys 0.04 (100%). Peak memory: 176612KB.

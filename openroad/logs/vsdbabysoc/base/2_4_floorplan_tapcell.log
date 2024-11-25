@@ -1,0 +1,8 @@
+OpenROAD v2.0-17013-gf7f634f88 
+Features included (+) or not (-): +Charts +GPU +GUI +Python
+This program is licensed under the BSD-3 license. See the LICENSE file for details.
+Components of this program may be licensed under more restrictive licenses which must be honored.
+[INFO ORD-0030] Using 16 thread(s).
+[INFO ODB-0303] The initial 576 rows (1965312 sites) were cut with 2 shapes for a total of 793 rows (1427888 sites).
+[INFO TAP-0005] Inserted 23885 tapcells.
+Elapsed time: 0:00.39[h:]min:sec. CPU time: user 0.35 sys 0.03 (98%). Peak memory: 149856KB.

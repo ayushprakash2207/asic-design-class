@@ -4844,6 +4844,46 @@ exit
 
 ## Lab 16: RTL to GDSII flow for the RVMYTH RISC-V core and VSDBabySoC
 
+
+### Introduction of OpenRoad and ORFS
+
+OpenROAD is an integrated chip physical design tool that takes a design from from RTL to GDSII, including synthesis, floorplanning, placement, routing, signoff parasitic extraction and timing analysis.
+
+It uses a hierarchical placement algorithm that aims to minimize wire length, and it provides several features to optimize timing and power consumption. OpenROAD is designed to be extensible and customizable, with a flexible architecture that allows users to add their own algorithms and features.
+
+The OpenROAD project supports two main flow controllers,
+
+* OpenROAD-flow-scripts(ORFS) is a flow controller that provides a collection of open-source tools for automated digital ASIC design from synthesis to layout. It provides a fully automated RTL-to-GDSII design flow, which includes Synthesis, Placement and Routing (PnR), STA (Static Timing Analysis), DRC (Design Rule Check) and LVS (Layout Versus Schematic) checks. ORFS aims to provide a flexible and customizable environment for digital ASIC design, allowing users to choose and combine different tools as needed.
+
+* In ORFS, OpenROAD is used as a plugin for the physical design stage, and it can be configured and customized to meet the specific needs of the design project. The OpenROAD plugin in ORFS provides access to several advanced features, such as hierarchical placement, global routing, and detailed routing optimization.
+
+* ORFS supports several public and private PDKs (under NDA). Available public PDK's are GF180, Skywater130, ASAP7 etc.
+
+* OpenLane is a complete automated RTL-to-GDSII flow similiar to ORFS and is developed by Efabless for the skywater130 MPW Program
+
+More about OpenRoad in the below link,
+
+``` https://openroad.readthedocs.io/en/latest/main/README.html ```
+
+### Brief process of ORFS (or RTL to GDSII in general)
+
+* Configuration: Once ORFS is installed, you can configure the framework to meet the specific needs of your design project. This involves specifying the design parameters, such as the target technology node, the design constraints, and the tool settings.
+  
+* Design entry: You can enter the design into ORFS in different ways, depending on your design entry method. ORFS supports different input formats such as Verilog
+  
+* Synthesis: The synthesis stage involves transforming the RTL design into a gate-level netlist. ORFS includes several open-source synthesis tools, such as Yosys and ABC, which can be used for this stage.
+  
+* Floorplanning: In the floorplanning stage, the placement of the different design modules within the chip area is determined. ORFS includes several floorplanning tools, such as RePlAce and Capo, which can be used for this stage.
+  
+* Placement: The placement stage involves determining the exact location of each gate or cell within the chip area. ORFS includes several placement tools, such as OpenROAD, which can be used for this stage.
+  
+* Routing: The routing stage involves connecting the gates and cells using metal wires to form a complete circuit. ORFS includes several routing tools, such as FastRoute and TritonRoute, which can be used for this stage.
+  
+* Layout verification: After the routing stage, the design is verified for layout correctness using tools such as Magic, which is included in ORFS.
+
+* GDSII generation: Once the design is verified, the final GDSII layout file is generated using ORFS tools such as Magic and KLayout.
+
+
 ### Installation of the OpenRoad Flow Scripts
 
 Follow the below link to install the ORFS with the necessary tools locally,
@@ -4880,3 +4920,7 @@ make gui_final
 ```
 
 <img src="images/Lab16/install/16_1_2.png" alt="ASIC_Design_Flow" width="800"/><br>
+
+### Understanding of the directory structure
+
+<img src="images/Lab16/install/16_1_3.jpg" alt="ASIC_Design_Flow" width="800"/><br>
